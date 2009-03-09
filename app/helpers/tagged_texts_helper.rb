@@ -1,0 +1,2 @@
+module TaggedTextsHelper
+end
