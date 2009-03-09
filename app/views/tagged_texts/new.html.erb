@@ -1,11 +1,11 @@
 <h1>New tagged_text</h1>
 
-<% form_for(@tagged_text) do |f| %>
+<% form_for(@tagged_text, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :filename %><br />
-    <%= f.text_field :filename %>
+    <%= f.label :file %><br />
+    <%= f.file_field :uploaded_file %>
   </p>
   <p>
     <%= f.submit "Create" %>

@@ -2,6 +2,8 @@ class CreateTaggedTexts < ActiveRecord::Migration
   def self.up
     create_table :tagged_texts do |t|
       t.string :filename
+      t.string :content_type
+      t.binary :filedata, :limit => 20.megabyte
 
       t.timestamps
     end
