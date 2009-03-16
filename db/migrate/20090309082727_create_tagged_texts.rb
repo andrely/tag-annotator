@@ -4,6 +4,7 @@ class CreateTaggedTexts < ActiveRecord::Migration
       t.string :filename
       t.string :content_type
       t.binary :filedata, :limit => 20.megabyte
+      t.integer :sentence_count
 
       t.timestamps
     end

@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  lemma: MyString
+  string: MyString
+  correct: false
+
+two:
+  lemma: MyString
+  string: MyString
+  correct: false

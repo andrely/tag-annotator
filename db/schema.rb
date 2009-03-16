@@ -9,12 +9,41 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090309082727) do
+ActiveRecord::Schema.define(:version => 20090309141721) do
+
+  create_table "sentences", :force => true do |t|
+    t.integer  "text_index"
+    t.integer  "text_id"
+    t.integer  "length"
+    t.integer  "tagged_text_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "tagged_texts", :force => true do |t|
     t.string   "filename"
     t.string   "content_type"
-    t.binary   "filedata",     :limit => 20971520
+    t.binary   "filedata",       :limit => 2147483647
+    t.integer  "sentence_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tags", :force => true do |t|
+    t.string   "lemma"
+    t.string   "string"
+    t.boolean  "correct"
+    t.integer  "index"
+    t.integer  "word_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "words", :force => true do |t|
+    t.string   "string"
+    t.integer  "sentence_index"
+    t.integer  "sentence_id"
+    t.integer  "tag_count"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
