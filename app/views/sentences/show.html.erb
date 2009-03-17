@@ -1,0 +1,41 @@
+<h1>Sentence <%= @sentence.text_index + 1 %> from text id <%= @sentence.tagged_text_id %></h1>
+
+<script type="text/javascript">
+  function updateTag(index) {
+	  $$('span.word').each(function(e) {e.style.color = 'black'})
+	  $$('div.tag').each(function(e) { e.style.display = 'none' })
+	
+	  $('word-' + index).style.color = 'red'
+	  $('tag-' + index).style.display = 'block'
+	  // $('tag-div').textContent = index.toString();
+	}
+</script>
+
+<p>
+	<% @words.each do |w| -%>
+	<% idx = w.sentence_index -%> 
+
+	<span id='word-<%= idx %>' class='word' onclick='updateTag(<%= idx %>)'><%= w.string %></span>
+
+	<% end %>
+</p>
+
+<p>
+	<div id='tag-div'/>
+	<% @words.each do |w| -%>
+	<% idx = w.sentence_index -%>
+
+	<div id='tag-<%= idx %>' class='tag' style='display:none'>
+		<table>
+			<tr><th colspan='2'><%= @sentence.context_string(idx) %></th></tr>
+			<% w.tags.each do |t| -%>
+			<tr>
+				<td><input type='checkbox' <%= t.correct ? 'checked="yes"' : '' %>'/></td>
+				<td><%= t.string %></td>
+			</tr>
+			<% end -%>
+		</table>
+	</div>
+	
+	<% end -%>
+</p>

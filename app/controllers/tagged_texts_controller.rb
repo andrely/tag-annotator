@@ -1,4 +1,6 @@
 class TaggedTextsController < ApplicationController
+  layout "default"
+  
   # GET /tagged_texts
   # GET /tagged_texts.xml
   def index
