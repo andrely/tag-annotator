@@ -11,8 +11,8 @@
 	    if (focus >= length) { focus = 0; }
 	    updateTag(focus);
 	  });
-	  shortcut.add("left", function() { window.location="<%= url_for :action => 'show', :id => @next_sent.id if @next_sent %>"; });
-	  shortcut.add("right", function() { window.location="<%= url_for :action => 'show', :id => @prev_sent.id if @prev_sent %>"; });
+	  shortcut.add("right", function() { window.location="<%= url_for :action => 'show', :id => @next_sent.id if @next_sent %>"; });
+	  shortcut.add("left", function() { window.location="<%= url_for :action => 'show', :id => @prev_sent.id if @prev_sent %>"; });
 	  shortcut.add("enter", function() { $$("form.edit_sentence")[0].submit(); } );
 	  shortcut.add("1", function() { toggleTag(0); });
 	  shortcut.add("2", function() { toggleTag(1); });
