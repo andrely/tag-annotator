@@ -1,8 +1,17 @@
 <p>
+	<b>Title:</b>
+  <%=h @tagged_text.title %>
+</p>
+<p>
+	<b>Comment:</b><br/>
+  <%= simple_format(@tagged_text.comment) %>
+</p>
+<p>
   <b>Filename:</b>
   <%=h @tagged_text.filename %>
 </p>
 
-
+<%= link_to 'Tag', :controller => 'sentences', :action => 'show', :id =>  Sentence.scoped_by_tagged_text_id(@tagged_text.id).scoped_by_text_index(0).first.id %>|
+<%= link_to 'Download', :action => 'download', :id => @tagged_text.id %>|
 <%= link_to 'Edit', edit_tagged_text_path(@tagged_text) %> |
 <%= link_to 'Back', tagged_texts_path %>

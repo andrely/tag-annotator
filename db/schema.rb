@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090309141721) do
+ActiveRecord::Schema.define(:version => 20090319122657) do
 
   create_table "sentences", :force => true do |t|
     t.integer  "text_index"
@@ -20,6 +20,12 @@ ActiveRecord::Schema.define(:version => 20090309141721) do
     t.datetime "updated_at"
   end
 
+  add_index "sentences", ["id"], :name => "index_sentences_on_id"
+  add_index "sentences", ["tagged_text_id"], :name => "index_sentences_on_tagged_text_id"
+  add_index "sentences", ["text_id"], :name => "index_sentences_on_text_id"
+  add_index "sentences", ["text_index", "tagged_text_id"], :name => "index_sentences_on_text_index_and_tagged_text_id"
+  add_index "sentences", ["text_index"], :name => "index_sentences_on_text_index"
+
   create_table "tagged_texts", :force => true do |t|
     t.string   "filename"
     t.string   "content_type"
@@ -27,6 +33,8 @@ ActiveRecord::Schema.define(:version => 20090309141721) do
     t.integer  "sentence_count"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
+    t.text     "comment"
   end
 
   create_table "tags", :force => true do |t|
@@ -39,6 +47,11 @@ ActiveRecord::Schema.define(:version => 20090309141721) do
     t.datetime "updated_at"
   end
 
+  add_index "tags", ["id"], :name => "index_tags_on_id"
+  add_index "tags", ["index", "word_id"], :name => "index_tags_on_index_and_word_id"
+  add_index "tags", ["index"], :name => "index_tags_on_index"
+  add_index "tags", ["word_id"], :name => "index_tags_on_word_id"
+
   create_table "words", :force => true do |t|
     t.string   "string"
     t.integer  "sentence_index"
@@ -47,5 +60,10 @@ ActiveRecord::Schema.define(:version => 20090309141721) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "words", ["id"], :name => "index_words_on_id"
+  add_index "words", ["sentence_id"], :name => "index_words_on_sentence_id"
+  add_index "words", ["sentence_index", "sentence_id"], :name => "index_words_on_sentence_index_and_sentence_id"
+  add_index "words", ["sentence_index"], :name => "index_words_on_sentence_index"
 
 end

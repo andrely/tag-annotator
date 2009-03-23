@@ -1,41 +1,86 @@
-<h1>Sentence <%= @sentence.text_index + 1 %> from text id <%= @sentence.tagged_text_id %></h1>
+<h1>Sentence <%= @sentence.text_index + 1 %> from "<%= @sentence.tagged_text.title %>"</h1>
 
 <script type="text/javascript">
+	focus = 0
+	length = <%= @sentence.length -%>
+
+	Event.observe(window, 'load', function() {
+	  updateTag(focus);
+	  shortcut.add("space", function() {
+	    focus = focus + 1;
+	    if (focus >= length) { focus = 0; }
+	    updateTag(focus);
+	  });
+	  shortcut.add("left", function() { window.location="<%= url_for :action => 'show', :id => @next_sent.id if @next_sent %>"; });
+	  shortcut.add("right", function() { window.location="<%= url_for :action => 'show', :id => @prev_sent.id if @prev_sent %>"; });
+	  shortcut.add("enter", function() { $$("form.edit_sentence")[0].submit(); } );
+	  shortcut.add("1", function() { toggleTag(0); });
+	  shortcut.add("2", function() { toggleTag(1); });
+	  shortcut.add("3", function() { toggleTag(2); });
+  	shortcut.add("4", function() { toggleTag(3); });
+	  shortcut.add("5", function() { toggleTag(4); });
+	  shortcut.add("6", function() { toggleTag(5); });
+	  shortcut.add("7", function() { toggleTag(6); });
+  	shortcut.add("8", function() { toggleTag(7); });
+	  shortcut.add("9", function() { toggleTag(8); });
+	  shortcut.add("0", function() { toggleTag(9); });
+	});
+	
   function updateTag(index) {
-	  $$('span.word').each(function(e) {e.style.color = 'black'})
+	  $$('span.word').each(function(e) { e.style.color = 'black' })
 	  $$('div.tag').each(function(e) { e.style.display = 'none' })
 	
 	  $('word-' + index).style.color = 'red'
 	  $('tag-' + index).style.display = 'block'
 	  // $('tag-div').textContent = index.toString();
 	}
+
+	function toggleTag(index) {
+	  id = "sentence_words_attributes_" + focus + "_tags_attributes_" + index + "_correct";
+	  elt = $(id)
+	  elt.checked = !elt.checked
+	}
 </script>
 
 <p>
 	<% @words.each do |w| -%>
-	<% idx = w.sentence_index -%> 
+	<% idx = w.sentence_index -%>
 
 	<span id='word-<%= idx %>' class='word' onclick='updateTag(<%= idx %>)'><%= w.string %></span>
 
-	<% end %>
+	<% end -%>
 </p>
 
 <p>
+	<% form_for @sentence do |sform| -%>
 	<div id='tag-div'/>
-	<% @words.each do |w| -%>
-	<% idx = w.sentence_index -%>
+	  <% sform.fields_for :words do |wform| -%>
+		<% idx = wform.object.sentence_index -%>
 
-	<div id='tag-<%= idx %>' class='tag' style='display:none'>
-		<table>
-			<tr><th colspan='2'><%= @sentence.context_string(idx) %></th></tr>
-			<% w.tags.each do |t| -%>
-			<tr>
-				<td><input type='checkbox' <%= t.correct ? 'checked="yes"' : '' %>'/></td>
-				<td><%= t.string %></td>
-			</tr>
-			<% end -%>
-		</table>
-	</div>
-	
+		<div id='tag-<%= idx %>' class='tag' style='display:none'>
+			<table>
+				<tr><th colspan='3'><%= @sentence.context_html_string(idx) %></th></tr>
+				<% wform.fields_for :tags do |tform| -%>
+
+				<tr>
+					<td>
+						<%= tform.check_box :correct %>
+					</td>
+					<td><%= tform.object.lemma %></td>
+					<td><%= tform.object.string %></td>
+				</tr>
+				<% end -%>
+			</table>
+		</div>
+		<% end -%>
+		<div>
+			<%= sform.submit :save %>
+		</div>
 	<% end -%>
 </p>
+
+<div>
+	<%= link_to "Text index", :controller => 'tagged_texts' %>
+	<%= link_to "Previous", :id => @prev_sent.id if @prev_sent %>
+	<%= link_to "Next", :id => @next_sent.id if @next_sent %>
+</div>

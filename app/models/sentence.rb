@@ -1,6 +1,8 @@
 class Sentence < ActiveRecord::Base
-  has_many :words
-  belongs_to :taggedtext
+  has_many :words, :dependent => :destroy
+  belongs_to :tagged_text
+
+  accepts_nested_attributes_for :words, :allow_destroy => true
 
   def orth_string()
     words = self.words.sort_by {|w| w.sentence_index}
@@ -23,5 +25,28 @@ class Sentence < ActiveRecord::Base
     if right < (self.length - 1) then string = string + ' ...' end
 
     return string
+  end
+
+  def context_html_string(index)
+    words = []
+
+    
+
+    left = index - 1
+    if left >= 0 then
+      words << "..."
+      words << self.words[left].string
+    end
+
+    words << '<span class="selected-context">' + self.words[index].string + '</span>'
+
+    right = index + 1
+    if right < self.length then
+      words << self.words[right].string
+      words << "..."
+    end
+
+
+    return words.join(' ')
   end
 end

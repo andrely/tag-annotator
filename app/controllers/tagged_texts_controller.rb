@@ -84,4 +84,12 @@ class TaggedTextsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def download
+    @tagged_text = TaggedText.find(params[:id])
+    
+    str = OBNOText.textString(@tagged_text)
+
+    send_data(str, :filename => @tagged_text.filename, :type => 'plain/txt', :disposition => 'attachment')
+  end
 end
