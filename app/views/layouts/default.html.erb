@@ -16,7 +16,9 @@
 </head>
 <body>
 
-<p style="color: green"><%= flash[:notice] %></p>
+<div id="flash_messages">
+	<%= render :partial => 'layouts/flash', :object => flash %>
+</div>
 
 <%= yield  %>
 

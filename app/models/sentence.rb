@@ -34,7 +34,7 @@ class Sentence < ActiveRecord::Base
 
     left = index - 1
     if left >= 0 then
-      words << "..."
+      words << "..." if left >= 1
       words << self.words[left].string
     end
 
@@ -43,7 +43,7 @@ class Sentence < ActiveRecord::Base
     right = index + 1
     if right < self.length then
       words << self.words[right].string
-      words << "..."
+      words << "..." if right < self.length - 1
     end
 
 
