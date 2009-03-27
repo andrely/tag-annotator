@@ -12,6 +12,7 @@
 		<td><%=h tagged_text.title %></td>
     <td><%=h tagged_text.filename %></td>
 		<td><%=h truncate(tagged_text.comment, 40) %></td>
+		<td><%= link_to 'Bookmarks', :action => tagged_text.id, :id => 'bookmarks' %></td>
 		<td><%= link_to 'Show', tagged_text %></td>
     <td><%= link_to 'Edit', edit_tagged_text_path(tagged_text) %></td>
     <td><%= link_to 'Destroy', tagged_text, :confirm => 'Are you sure?', :method => :delete %></td>

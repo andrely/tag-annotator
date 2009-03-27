@@ -1,0 +1,13 @@
+<p>
+  <b>Sentence:</b>
+  <%=h @bookmark.sentence_id %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%=h @bookmark.comment %>
+</p>
+
+
+<%= link_to 'Edit', edit_bookmark_path(@bookmark) %> |
+<%= link_to 'Back', bookmarks_path %>

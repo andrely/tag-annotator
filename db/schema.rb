@@ -9,7 +9,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090319122657) do
+ActiveRecord::Schema.define(:version => 20090327104728) do
+
+  create_table "bookmarks", :force => true do |t|
+    t.integer  "sentence_id"
+    t.string   "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "tagged_text_id"
+  end
+
+  add_index "bookmarks", ["id", "tagged_text_id"], :name => "index_bookmarks_on_id_and_tagged_text_id"
+  add_index "bookmarks", ["id"], :name => "index_bookmarks_on_id"
+  add_index "bookmarks", ["tagged_text_id"], :name => "index_bookmarks_on_tagged_text_id"
 
   create_table "sentences", :force => true do |t|
     t.integer  "text_index"

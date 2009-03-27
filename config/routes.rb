@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :tagged_texts
+  map.resources :bookmarks
+
+  map.resources :tagged_texts, :has_many => [ :bookmarks ]
   map.resources :sentences
 
   # The priority is based upon order of creation: first created -> highest priority.

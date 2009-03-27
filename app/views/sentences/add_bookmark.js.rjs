@@ -1,0 +1,2 @@
+page.replace_html("bookmark-span", :partial => "bookmarked")
+page["bookmark-span"].visual_effect :highlight, :startcolor => "#88ff88", :endcolor => "#114411"

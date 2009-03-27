@@ -1,5 +1,6 @@
 class TaggedText < ActiveRecord::Base
   has_many :sentences, :dependent => :destroy
+  has_many :bookmarks, :dependent => :destroy
   
   # validates_format_of :content_type, :with => /^text/, :message => '--- you can only upload text files'
   def uploaded_file=(file_field)

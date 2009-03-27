@@ -34,4 +34,14 @@ class SentencesController < ApplicationController
     end
   end
 
+  def add_bookmark
+    @sentence = Sentence.find(params[:sentence_id])
+    @bookmark = Bookmark.new(:sentence_id => @sentence.id, :tagged_text_id => @sentence.tagged_text_id)
+
+    # add error handling
+    @bookmark.save
+    respond_to do |format|
+      format.js
+    end
+  end
 end
