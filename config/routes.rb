@@ -1,7 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :bookmarks
-
+  
+  map.connect 'tagged_texts/list/:id', :controller => 'tagged_texts', :action => 'list', :id => :id
   map.resources :tagged_texts, :has_many => [ :bookmarks ]
+  
   map.resources :sentences
 
   # The priority is based upon order of creation: first created -> highest priority.

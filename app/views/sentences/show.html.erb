@@ -68,12 +68,12 @@
 
 		<div id='tag-<%= idx %>' class='tag' style='display:none'>
 			<table>
-				<tr><th colspan='3'><%= @sentence.context_html_string(idx) %></th></tr>
+				<tr><th colspan='4' align='left'><%= @sentence.context_html_string(idx) %></th></tr>
 				<% idx = 1 -%>
 				<% wform.fields_for :tags do |tform| -%>
 
 				<tr>
-					<td><%= idx %></td>
+					<td><%= if idx < 10 then idx elsif idx == 10 then 0 end %></td>
 					<td>
 						<%= tform.check_box :correct %>
 					</td>

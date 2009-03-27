@@ -92,4 +92,8 @@ class TaggedTextsController < ApplicationController
 
     send_data(str, :filename => @tagged_text.filename, :type => 'plain/txt', :disposition => 'attachment')
   end
+
+  def list
+    @sentences = Sentence.find_all_by_tagged_text_id(params[:id])
+  end
 end

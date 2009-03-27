@@ -18,6 +18,7 @@
     <td><%= link_to 'Destroy', tagged_text, :confirm => 'Are you sure?', :method => :delete %></td>
 		<td><%= link_to 'Tag', :controller => 'sentences', :action => 'show', :id =>  Sentence.scoped_by_tagged_text_id(tagged_text.id).scoped_by_text_index(0).first.id %></td>
 		<td><%= link_to 'Download', :action => 'download', :id => tagged_text.id %></td>
+		<td><%= link_to 'List', :action => 'list', :id => tagged_text.id %></td>
   </tr>
 <% end %>
 </table>
