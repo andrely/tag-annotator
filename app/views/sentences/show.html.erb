@@ -98,3 +98,16 @@
 
 	<%= render :partial => 'add_bookmark' %>
 </div>
+
+<p>
+	This display shows a corpus sentence and the tags associated with it. The tags are displayed for one word at
+	a time, with checkboxes indicating which tag(s) are marked as correct. Use the mouse to click on the words
+	and checkboxes, or use the following keyboard shortcuts:
+<p>
+	<ul>
+		<li><b>Space:</b> Selects the next word in the sentence.</li>
+		<li><b>. (period):</b> Selects the previous word in this sentence.</li>
+		<li><b>&rarr;:</b> Proceed to the next sentence in the corpus.</li>
+		<li><b>&larr;:</b> Return to the previous sentence in the corpus.</li>
+		<li><b>0-9:</b> Toggle the correct checkbox on the ten first tags (0 toggles the tenth tag).</li>
+	</ul>
