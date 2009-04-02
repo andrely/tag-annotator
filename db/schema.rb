@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(:version => 20090327104728) do
   create_table "tagged_texts", :force => true do |t|
     t.string   "filename"
     t.string   "content_type"
-    t.binary   "filedata",       :limit => 2147483647
+    t.binary   "filedata",       :limit => 20971520
     t.integer  "sentence_count"
     t.datetime "created_at"
     t.datetime "updated_at"
