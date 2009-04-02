@@ -26,6 +26,6 @@ production:
   adapter: mysql
   database: tagger_annotate_production
   username: andrely
-  password: taggann2009
+  password: tagann2009
   host: localhost
 
