@@ -20,7 +20,7 @@
 
 	  shortcut.add("right", function() { window.location="<%= url_for :action => 'show', :id => @next_sent.id if @next_sent %>"; });
 	  shortcut.add("left", function() { window.location="<%= url_for :action => 'show', :id => @prev_sent.id if @prev_sent %>"; });
-	  shortcut.add("enter", function() { $$("form.edit_sentence")[0].submit(); } );
+	  // shortcut.add("enter", function() { $$("form.edit_sentence")[0].submit(); } );
 	  shortcut.add("1", function() { toggleTag(0); });
 	  shortcut.add("2", function() { toggleTag(1); });
 	  shortcut.add("3", function() { toggleTag(2); });
