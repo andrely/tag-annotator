@@ -20,7 +20,7 @@ class OBNOText
     filedata.each_line do |line|
       if isWordLine(line) then
         word = Word.new
-        word.string = getWord(line)
+        word.string = getWord(line).strip
         word.sentence_index = index
         word.tag_count = tag_index
         sentence.words << word
@@ -40,8 +40,8 @@ class OBNOText
       if isTagLine(line) then
         tag = Tag.new
         lemma, string, correct = getTag(line)
-        tag.lemma = lemma
-        tag.string = string
+        tag.lemma = lemma.strip
+        tag.string = string.strip
         tag.correct = correct
         tag.index = tag_index
         tag_index += 1
