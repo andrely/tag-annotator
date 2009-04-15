@@ -77,8 +77,8 @@
 					<td>
 						<%= tform.check_box :correct %>
 					</td>
-					<td><%= tform.object.lemma %></td>
-					<td><%= tform.object.string %></td>
+					<td><%= h(tform.object.lemma) %></td>
+					<td><%= h(tform.object.string) %></td>
 				</tr>
 				<% idx += 1 -%>
 				<% end -%>
