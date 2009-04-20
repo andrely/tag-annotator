@@ -28,4 +28,4 @@ production:
   username: andrely
   password: tagann2009
   host: localhost
-
+  encoding: utf8
