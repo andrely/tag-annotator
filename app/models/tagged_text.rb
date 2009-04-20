@@ -9,7 +9,7 @@ class TaggedText < ActiveRecord::Base
     # self.filedata = file_field.read
 
     # OBNOText.parse(self, self.filedata)
-    OBNOText.parse(self, file_field.read)
+    OBNOText.parse(self, Iconv.conv('utf8', 'iso8859-1', file_field.read))
   end
 
   def base_part_of(file_name) 
