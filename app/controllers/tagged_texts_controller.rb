@@ -88,7 +88,7 @@ class TaggedTextsController < ApplicationController
   def download
     @tagged_text = TaggedText.find(params[:id])
     
-    str = OBNOText.textString(@tagged_text)
+    str = Iconv.conv('iso8859-1', 'utf-8', OBNOText.textString(@tagged_text))
 
     send_data(str, :filename => @tagged_text.filename, :type => 'plain/txt', :disposition => 'attachment')
   end
