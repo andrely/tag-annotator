@@ -4,7 +4,7 @@ class OBNOText
 
   @word_regex = Regexp.compile('\"<(.*)>\"')
   @tag_regex = Regexp.compile('^;?\s+\"(.*)\"\s+([^\!]*?)\s*(<Correct\!>)?$')
-  @punctuation_regex = Regexp.compile('^\$?[\.\?\!]$')
+  @punctuation_regex = Regexp.compile('^\$?[\.\:\|\?\!]$') # .:|!?
 
   def initialize()
   end
