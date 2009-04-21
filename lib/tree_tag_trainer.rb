@@ -1,6 +1,10 @@
 class TreeTagTrainer
   attr_accessor :lexicon, :text_id, :data, :classes
 
+  @@tmp_file_name = 'tree-tagger-training-tmp'
+  @@train_treetagger_bin = '/Users/stinky/Downloads/tree-tagger-MacOSX-3.1/bin/train-tree-tagger'
+  @@default_sent_tag = 'clb'
+
   def initialize(text_id)
     @text_id = text_id
     @punctuation_regex = Regexp.compile('^\$?[\.\:\|\?\!]$') # .:|!?
@@ -35,15 +39,19 @@ class TreeTagTrainer
     tags.find { |t| t.correct }
   end
 
-  def make_training_data()
+  def make_training_data(opts={})
     @data = []
     @lexicon = {}
     classes = {}
+    
+    fold = opts[:fold] || nil
     
     sentences = Sentence.find_all_by_tagged_text_id(@text_id)
 
     sentences.each do |s|
       words = Word.find_all_by_sentence_id(s.id)
+
+      next if fold and s.text_index % 10 == fold
 
       words.each do |w|
         tag = get_correct_tag(w)
@@ -73,6 +81,7 @@ class TreeTagTrainer
     @classes = classes.to_a.collect { |x| x.first }
 
     [@data, @lexicon, @open_classes]
+    # nil
   end
 
   def make_tag_list()
@@ -104,5 +113,16 @@ class TreeTagTrainer
     File.open(name + '.class', 'w') do |f|
       @classes.each { |c| f.puts c }
     end
+  end
+
+  def train()
+    dir = Dir.tmpdir
+    Dir.chdir dir
+    make_files @@tmp_file_name
+    command = "#{@@train_treetagger_bin} #{@@tmp_file_name}.lex  #{@@tmp_file_name}.class  #{@@tmp_file_name}.train  #{@@tmp_file_name}.model -st #{@@default_sent_tag}"
+
+    system(command)
+
+    Dir.glob(dir + "/#{@@tmp_file_name}.model").first
   end
 end
