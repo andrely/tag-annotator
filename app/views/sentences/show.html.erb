@@ -91,29 +91,29 @@
 
 <%= observe_form "edit_sentence_#{@sentence.id}", :url => { :action => 'update' } %>
 
-<div>
-	<%= link_to "Text index", :controller => 'tagged_texts' %>
-	<%= link_to "Previous", :id => @prev_sent.id if @prev_sent %>
-	<%= link_to "Next", :id => @next_sent.id if @next_sent %>
-
-	<%= render :partial => 'add_bookmark' %>
-</div>
-
-<p><br><br><br><br>
 <div style="position:  absolute;  bottom:  0;">
-<p>
-	This display shows a corpus sentence and the tags associated with it. The tags are displayed for one word at
-	a time, with checkboxes indicating which tag(s) are marked as correct. Use the mouse to click on the words
-	and checkboxes, or use the following keyboard shortcuts:
-<p>
-	<ul>
-		<li><b>Space:</b> Selects the next word in the sentence.</li>
-		<li><b>. (period):</b> Selects the previous word in this sentence.</li>
-		<li><b>&rarr;:</b> Proceed to the next sentence in the corpus.</li>
-		<li><b>&larr;:</b> Return to the previous sentence in the corpus.</li>
-		<li><b>0-9:</b> Toggle the correct checkbox on the ten first tags (0 toggles the tenth tag).</li>
-	</ul>
-<p>
-	The <b>Bookmark</b> link adds a bookmark for this sentence that can be accessed though the bookmarks link in
-	the corpus index.
+	<p>
+		<div>
+			<%= link_to "Text index", :controller => 'tagged_texts' %>
+			<%= link_to "Previous", :id => @prev_sent.id if @prev_sent %>
+			<%= link_to "Next", :id => @next_sent.id if @next_sent %>
+	
+			<%= render :partial => 'add_bookmark' %>
+		</div>
+
+	<p>
+		This display shows a corpus sentence and the tags associated with it. The tags are displayed for one word at
+		a time, with checkboxes indicating which tag(s) are marked as correct. Use the mouse to click on the words
+		and checkboxes, or use the following keyboard shortcuts:
+	<p>
+		<ul>
+			<li><b>Space:</b> Selects the next word in the sentence.</li>
+			<li><b>. (period):</b> Selects the previous word in this sentence.</li>
+			<li><b>&rarr;:</b> Proceed to the next sentence in the corpus.</li>
+			<li><b>&larr;:</b> Return to the previous sentence in the corpus.</li>
+			<li><b>0-9:</b> Toggle the correct checkbox on the ten first tags (0 toggles the tenth tag).</li>
+		</ul>
+	<p>
+		The <b>Bookmark</b> link adds a bookmark for this sentence that can be accessed though the bookmarks link in
+		the corpus index.
 </div>
