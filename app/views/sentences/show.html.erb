@@ -75,7 +75,7 @@
 				<tr>
 					<td><%= if idx < 10 then idx elsif idx == 10 then 0 end %></td>
 					<td>
-						<%= tform.check_box :correct %>
+						<%= tform.check_box :correct, { :onclick => "this.blur()" } %>
 					</td>
 					<td><%= h(tform.object.lemma) %></td>
 					<td><%= h(tform.object.clean_out_tag) %></td>
