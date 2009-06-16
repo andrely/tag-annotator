@@ -15,5 +15,22 @@ class TaggedText < ActiveRecord::Base
   def base_part_of(file_name) 
     File.basename(file_name).gsub(/[^\w._-]/, '') 
   end 
+  
+  # saves the tagged text with ambiguities to the filename given
+  # file_name - the filename path as a string
+  # returns nil
+  def save_ambigious_file(file_name)
+    File.open(file_name, 'w') do |f|
+      sentences.each do |s|
+        s.words.each do |w|
+          tag_strings = w.get_correct_tags().collect { |t| t.clean_out_tag }
+          f.puts w.string + "\t" + tag_strings.join("\t")
+        end
 
+        f.puts
+      end
+    end
+
+    nil
+  end
 end
