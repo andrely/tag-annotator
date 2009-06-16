@@ -12,4 +12,10 @@ class Word < ActiveRecord::Base
   def get_ambiguity()
     Tag.find(:all, :conditions => "correct = true and word_id = #{self.id}").count
   end
+  
+  # returns true if there are more than one reading false otherwise
+  # ignores negative numbers (ie. returns true)
+  def ambigious?()
+    get_ambiguity == 0
+  end
 end
