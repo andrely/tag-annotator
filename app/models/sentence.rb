@@ -49,4 +49,10 @@ class Sentence < ActiveRecord::Base
 
     return words.join(' ')
   end
+
+  # return the number of ambigious words
+  # ie. words with more than one tag marked as correct
+  def count_ambigous_words()
+    words.find_all { |w| w.ambigious? }.count
+  end
 end
