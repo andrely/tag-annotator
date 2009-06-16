@@ -14,7 +14,7 @@ class Word < ActiveRecord::Base
   end
   
   # returns true if there are more than one reading false otherwise
-  # ignores negative numbers (ie. returns true)
+  # ignores zero and negative numbers (ie. returns true)
   def ambigious?()
     get_ambiguity != 1
   end
