@@ -24,7 +24,7 @@ class TaggedText < ActiveRecord::Base
       sentences.each do |s|
         s.words.each do |w|
           tag_strings = w.get_correct_tags().collect { |t| t.clean_out_tag }
-          f.puts w.string + "\t" + tag_strings.join("\t")
+          f.puts w.string + "\t" + tag_strings.sort.join("\t")
         end
 
         f.puts
