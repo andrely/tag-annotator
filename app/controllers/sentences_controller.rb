@@ -1,12 +1,12 @@
 class SentencesController < ApplicationController
   layout "default"
 
-  after_filter :discard_flash_if_xhr
+  # after_filter :discard_flash_if_xhr
 
-  protected
-  def discard_flash_if_xhr
-    flash.discard if request.xhr?
-  end
+#   protected
+#   def discard_flash_if_xhr
+#     flash.discard if request.xhr?
+#   end
 
   public
   # GET /sentences/1
@@ -36,13 +36,10 @@ class SentencesController < ApplicationController
 
     respond_to do |format|
       if @sentence.update_attributes(params[:sentence])
-        flash[:notice] = 'Updating sentence.'
         format.js
       else
-        render :update do |page|
-          flash[:notice] = 'Error updating sentence.'
-          page.reload_flash
-        end
+        flash[:error] = "Database error! Mann over bord!"
+        format.js
       end
     end
   end
