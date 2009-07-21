@@ -36,7 +36,7 @@ class SentencesController < ApplicationController
 
     respond_to do |format|
       if @sentence.update_attributes(params[:sentence])
-        format.js
+        render :partial => 'empty'
       else
         flash[:error] = "Database error! Mann over bord!"
         format.js
