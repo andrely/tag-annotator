@@ -89,7 +89,7 @@
 	<% end -%>
 </p>
 
-<%= observe_form "edit_sentence_#{@sentence.id}", :url => { :action => 'update' }, :update => { :failure => "feedback" }%>
+<%= observe_form "edit_sentence_#{@sentence.id}", :url => { :action => 'update' }, :failure => "alert('error')" %>
 
 <div id='feedback'>
 </div>
