@@ -1,122 +1,128 @@
 <h1>Sentence <%= @sentence.text_index + 1 %> from "<%= @sentence.tagged_text.title %>"</h1>
 
 <script type="text/javascript">
-	focus = 0
-	length = <%= @sentence.length -%>
+    focus = 0
+    length = <%= @sentence.length -%>
 
-	Event.observe(window, 'load', function() {
-	  updateTag(focus);
-	  shortcut.add("space", function() {
-	    focus = focus + 1;
-	    if (focus >= length) { focus = 0; }
-	    updateTag(focus);
-	  });
+            Event.observe(window, 'load', function() {
+                updateTag(focus);
+                shortcut.add("space", function() {
+                    focus = focus + 1;
+                    if (focus >= length) { focus = 0; }
+                    updateTag(focus);
+                });
 
-	  shortcut.add(".", function() {
-	    focus = focus - 1;
-	    if (focus < 0) { focus = length - 1; }
-		  updateTag(focus);
-    });
+                shortcut.add(".", function() {
+                    focus = focus - 1;
+                    if (focus < 0) { focus = length - 1; }
+                    updateTag(focus);
+                });
 
-	  shortcut.add("right", function() { window.location="<%= url_for :action => 'show', :id => @next_sent.id if @next_sent %>"; });
-	  shortcut.add("left", function() { window.location="<%= url_for :action => 'show', :id => @prev_sent.id if @prev_sent %>"; });
-	  // shortcut.add("enter", function() { $$("form.edit_sentence")[0].submit(); } );
-	  shortcut.add("1", function() { toggleTag(0); });
-	  shortcut.add("2", function() { toggleTag(1); });
-	  shortcut.add("3", function() { toggleTag(2); });
-  	shortcut.add("4", function() { toggleTag(3); });
-	  shortcut.add("5", function() { toggleTag(4); });
-	  shortcut.add("6", function() { toggleTag(5); });
-	  shortcut.add("7", function() { toggleTag(6); });
-  	shortcut.add("8", function() { toggleTag(7); });
-	  shortcut.add("9", function() { toggleTag(8); });
-	  shortcut.add("0", function() { toggleTag(9); });
-	});
-	
-  function updateTag(index) {
-	  $$('span.word').each(function(e) { e.style.color = 'black' })
-	  $$('div.tag').each(function(e) { e.style.display = 'none' })
-	
-	  $('word-' + index).style.color = 'red'
-	  $('tag-' + index).style.display = 'block'
-	  // $('tag-div').textContent = index.toString();
-	  focus = index
-	}
+                shortcut.add("right", function() { window.location="<%= url_for :action => 'show', :id => @next_sent.id if @next_sent %>"; });
+                shortcut.add("left", function() { window.location="<%= url_for :action => 'show', :id => @prev_sent.id if @prev_sent %>"; });
+                // shortcut.add("enter", function() { $$("form.edit_sentence")[0].submit(); } );
+                shortcut.add("1", function() { toggleTag(0); });
+                shortcut.add("2", function() { toggleTag(1); });
+                shortcut.add("3", function() { toggleTag(2); });
+                shortcut.add("4", function() { toggleTag(3); });
+                shortcut.add("5", function() { toggleTag(4); });
+                shortcut.add("6", function() { toggleTag(5); });
+                shortcut.add("7", function() { toggleTag(6); });
+                shortcut.add("8", function() { toggleTag(7); });
+                shortcut.add("9", function() { toggleTag(8); });
+                shortcut.add("0", function() { toggleTag(9); });
+            });
 
-	function toggleTag(index) {
-	  id = "sentence_words_attributes_" + focus + "_tags_attributes_" + index + "_correct";
-	  elt = $(id)
-	  // elt.checked = !elt.checked
-	  elt.click()
-	}
+    function updateTag(index) {
+        $$('span.word').each(function(e) { e.style.color = 'black' })
+        $$('div.tag').each(function(e) { e.style.display = 'none' })
+
+        $('word-' + index).style.color = 'red'
+        $('tag-' + index).style.display = 'block'
+        // $('tag-div').textContent = index.toString();
+        focus = index
+    }
+
+    function toggleTag(index) {
+        id = "tag_" + focus + "_" + (index + 1);
+        elt = $(id)
+        // elt.checked = !elt.checked
+        elt.click()
+    }
 </script>
 
 <p>
-	<% @words.each do |w| -%>
-	<% idx = w.sentence_index -%>
+  <% @words.each do |w| -%>
+      <% idx = w.sentence_index -%>
 
-	<span id='word-<%= idx %>' class='word' onclick='updateTag(<%= idx %>)'><%= w.string %></span>
+      <span id='word-<%= idx %>' class='word' onclick='updateTag(<%= idx %>)'><%= w.string %></span>
 
-	<% end -%>
+  <% end -%>
 </p>
 
 <p>
-	<% form_for @sentence do |sform| -%>
-	<div id='tag-div'/>
-	  <% sform.fields_for :words do |wform| -%>
-		<% idx = wform.object.sentence_index -%>
 
-		<div id='tag-<%= idx %>' class='tag' style='display:none'>
-			<table>
-				<tr><th colspan='4' align='left'><%= @sentence.context_html_string(idx) %></th></tr>
-				<% idx = 1 -%>
-				<% wform.fields_for :tags do |tform| -%>
+<div id='tag-div'/>
+<% @words.each do |wform| -%>
+    <% w_idx = wform.sentence_index -%>
 
-				<tr>
-					<td><%= if idx < 10 then idx elsif idx == 10 then 0 end %></td>
-					<td>
-						<%= tform.check_box :correct, { :onclick => "this.blur()" } %>
-					</td>
-					<td><%= h(tform.object.lemma) %></td>
-					<td><%= h(tform.object.clean_out_tag) %></td>
-				</tr>
-				<% idx += 1 -%>
-				<% end -%>
-			</table>
-		</div>
-		<% end -%>
-		
-	<% end -%>
+    <div id='tag-<%= w_idx %>' class='tag' style='display:none'>
+      <table>
+        <tr><th colspan='4' align='left'><%= @sentence.context_html_string(w_idx) %></th></tr>
+        <% t_idx = 1 -%>
+        <% wform.tags.each do |tform| -%>
+
+            <tr id="<%= "row_#{w_idx}_#{t_idx}" -%>">
+              <td><%= if t_idx < 10 then t_idx elsif t_idx == 10 then 0 end %></td>
+              <td>
+                <%= check_box_tag("tag_#{w_idx}_#{t_idx}", "tag_#{w_idx}_#{t_idx}", tform.correct?,
+                                  { :onclick => remote_function(:url => {:controller => :tags,
+                                                                         :action => :toggle,
+                                                                         :id => tform.id},
+                                                                :with => "'status='+!$('tag_#{w_idx}_#{t_idx}').checked + '&nocache=' + new Date().getTime()",
+                                                                :method => :get,
+                                                                :before => "Field.disable('tag_#{w_idx}_#{t_idx}')",
+                                                                :after => "Field.enable('tag_#{w_idx}_#{t_idx}')",
+                                                                :success => "tagToggleSuccessHandler(request, 'tag_#{w_idx}_#{t_idx}', 'row_#{w_idx}_#{t_idx}');",
+                                                                :failure => "tagToggleFailureHandler(request, 'tag_#{w_idx}_#{t_idx}');")}) %>
+              </td>
+              <td><%= h(tform.lemma) %></td>
+              <td><%= h(tform.clean_out_tag) %></td>
+            </tr>
+            <% t_idx += 1 -%>
+        <% end -%>
+      </table>
+    </div>
+<% end -%>
+
 </p>
-
-<%= observe_form "edit_sentence_#{@sentence.id}", :url => { :action => 'update' }, :failure => "alert('error')" %>
 
 <div id='feedback'>
 </div>
 
 <div style="position:  absolute;  bottom:  0;">
-	<p>
-		<div>
-			<%= link_to "Text index", :controller => 'tagged_texts' %>
-			<%= link_to "Previous", :id => @prev_sent.id if @prev_sent %>
-			<%= link_to "Next", :id => @next_sent.id if @next_sent %>
-	
-			<%= render :partial => 'add_bookmark' %>
-		</div>
+  <p>
+  <div>
+    <%= link_to "Text index", :controller => 'tagged_texts' %>
+    <%= link_to "Previous", :id => @prev_sent.id if @prev_sent %>
+    <%= link_to "Next", :id => @next_sent.id if @next_sent %>
 
-	<p>
-		This display shows a corpus sentence and the tags associated with it. The tags are displayed for one word at
-		a time, with checkboxes indicating which tag(s) are marked as correct. Use the mouse to click on the words
-		and checkboxes, or use the following keyboard shortcuts:
-	<p>
-		<ul>
-			<li><b>Space:</b> Selects the next word in the sentence.</li>
-			<li><b>. (period):</b> Selects the previous word in this sentence.</li>
-			<li><b>&rarr;:</b> Proceed to the next sentence in the corpus.</li>
-			<li><b>&larr;:</b> Return to the previous sentence in the corpus.</li>
-			<li><b>0-9:</b> Toggle the correct checkbox on the ten first tags (0 toggles the tenth tag).</li>
-		</ul>
-	<p>
-		The <b>Bookmark</b> link adds a bookmark for this sentence that can be accessed though the bookmarks link in
-		the corpus index.
+    <%= render :partial => 'add_bookmark' %>
+  </div>
+
+  <p>
+    This display shows a corpus sentence and the tags associated with it. The tags are displayed for one word at
+    a time, with checkboxes indicating which tag(s) are marked as correct. Use the mouse to click on the words
+    and checkboxes, or use the following keyboard shortcuts:
+  <p>
+  <ul>
+    <li><b>Space:</b> Selects the next word in the sentence.</li>
+    <li><b>. (period):</b> Selects the previous word in this sentence.</li>
+    <li><b>&rarr;:</b> Proceed to the next sentence in the corpus.</li>
+    <li><b>&larr;:</b> Return to the previous sentence in the corpus.</li>
+    <li><b>0-9:</b> Toggle the correct checkbox on the ten first tags (0 toggles the tenth tag).</li>
+  </ul>
+  <p>
+    The <b>Bookmark</b> link adds a bookmark for this sentence that can be accessed though the bookmarks link in
+    the corpus index.
 </div>
