@@ -29,11 +29,14 @@
     <% t_idx += 1 -%>
 <% end -%>
 <tr>
-  <th colspan="5" align="left">
+  <th colspan="5" align="left" >
     <div>
-      <a href="" onclick="">+</a>
+      <%= link_to("+", "#",
+                  :id => "add_tag_fold_#{wform.id}",
+                  :onmousedown => "toggleAddTagForm(#{wform.id});",
+                  :style => "text-decoration:none") %>
     </div>
-    <div id=<%= "add_tag_form=#{wform.id}" -%> >
+    <div id=<%= "add_tag_form_#{wform.id}" -%> style='display:none'>
       <%= text_field_tag("add_tag_#{wform.id}") %>
       <%= text_field_tag("add_lemma_#{wform.id}") %>
       <%= submit_tag('Add', :onclick => remote_function(:url => {:controller => :words,

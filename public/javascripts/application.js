@@ -19,5 +19,18 @@ function tagToggleSuccessHandler(request, tag_id, row_id) {
 
 function tagToggleFailureHandler(request, tag_id) {
     showError(request.status + ' ' + request.responseText);
-    $(tag_id).checked = !$(tag_id).checked
+    $(tag_id).checked = !$(tag_id).checked;
+}
+
+function toggleAddTagForm(w_id) {
+    $('add_tag_form_' + w_id).toggle();
+
+    var button = $('add_tag_fold_'+ w_id);
+
+    if (button.text == '+') {
+        $('add_tag_fold_'+ w_id).update('-');
+    }
+    else {
+        $('add_tag_fold_'+ w_id).update('+');
+    }
 }
