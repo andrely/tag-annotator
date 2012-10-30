@@ -1,0 +1,44 @@
+<% w_idx = wform.sentence_index -%>
+<table>
+<tr><th colspan='4' align='left'><%= sent.context_html_string(w_idx) %></th></tr>
+<% t_idx = 1 -%>
+<% wform.tags.each do |tform| -%>
+
+    <tr id="<%= "row_#{w_idx}_#{t_idx}" -%>">
+      <td><%= if t_idx < 10 then t_idx elsif t_idx == 10 then 0 end %></td>
+      <td>
+        <%= check_box_tag("tag_#{w_idx}_#{t_idx}", "tag_#{w_idx}_#{t_idx}", tform.correct?,
+                          { :onclick => remote_function(:url => {:controller => :tags,
+                                                                 :action => :toggle,
+                                                                 :id => tform.id},
+                                                        :with => "'status='+!$('tag_#{w_idx}_#{t_idx}').checked + '&nocache=' + new Date().getTime()",
+                                                        :method => :get,
+                                                        :before => "Field.disable('tag_#{w_idx}_#{t_idx}')",
+                                                        :after => "Field.enable('tag_#{w_idx}_#{t_idx}')",
+                                                        :success => "tagToggleSuccessHandler(request, 'tag_#{w_idx}_#{t_idx}', 'row_#{w_idx}_#{t_idx}');",
+                                                        :failure => "tagToggleFailureHandler(request, 'tag_#{w_idx}_#{t_idx}');")}) %>
+      </td>
+      <td><%= h(tform.lemma) %></td>
+      <td><%= h(tform.clean_out_tag) %></td>
+    </tr>
+    <% t_idx += 1 -%>
+<% end -%>
+<tr>
+  <th colspan="4" align="left">
+    <div>
+      <a href="" onclick="">+</a>
+    </div>
+    <div id=<%= "add_tag_form=#{wform.id}" -%> >
+      <%= text_field_tag("add_tag_#{wform.id}") %>
+      <%= text_field_tag("add_lemma_#{wform.id}") %>
+      <%= submit_tag('Add', :onclick => remote_function(:url => {:controller => :words,
+                                                                 :action => :add_tag,
+                                                                 :id => wform.id},
+                                                        :with => "'lemma='+$('add_lemma_#{wform.id}').value+'&tag='+$('add_tag_#{wform.id}').value",
+                                                        :update => "tag-#{w_idx}"),
+                     :success => "updateTag(#{w_idx})",
+                     :failure => "show_error('failed!')") %>
+    </div>
+  </th>
+</tr>
+</table>
