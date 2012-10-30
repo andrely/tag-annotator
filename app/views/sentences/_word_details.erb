@@ -1,6 +1,6 @@
 <% w_idx = wform.sentence_index -%>
 <table>
-<tr><th colspan='4' align='left'><%= sent.context_html_string(w_idx) %></th></tr>
+<tr><th colspan='5' align='left'><%= sent.context_html_string(w_idx) %></th></tr>
 <% t_idx = 1 -%>
 <% wform.tags.each do |tform| -%>
 
@@ -20,11 +20,16 @@
       </td>
       <td><%= h(tform.lemma) %></td>
       <td><%= h(tform.clean_out_tag) %></td>
+      <td>
+        <%= link_to_remote("del", :update => "tag-#{w_idx}",
+                                  :url => {:controller => :tags, :action => :delete, :id => tform.id},
+                                  :failure => "showError('failed!')") %>
+      </td>
     </tr>
     <% t_idx += 1 -%>
 <% end -%>
 <tr>
-  <th colspan="4" align="left">
+  <th colspan="5" align="left">
     <div>
       <a href="" onclick="">+</a>
     </div>
@@ -37,7 +42,7 @@
                                                         :with => "'lemma='+$('add_lemma_#{wform.id}').value+'&tag='+$('add_tag_#{wform.id}').value",
                                                         :update => "tag-#{w_idx}"),
                      :success => "updateTag(#{w_idx})",
-                     :failure => "show_error('failed!')") %>
+                     :failure => "showError('failed!')") %>
     </div>
   </th>
 </tr>

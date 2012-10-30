@@ -17,4 +17,17 @@ class TagsController < ApplicationController
     render :nothing => true
   end
 
+  def delete
+    @tag = Tag.find(params[:id])
+    @tag.destroy
+
+    @word = Word.find(@tag.word_id)
+
+    @word.tags.each_with_index {|tag, i| tag.index = i}
+    @word.save
+
+    @sentence = Sentence.find(@word.sentence_id)
+    
+    render(:partial => 'sentences/word_details', :locals => {:wform => @word, :sent => @sentence})
+  end
 end
