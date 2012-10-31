@@ -78,6 +78,9 @@
 <div style="position:  absolute;  bottom:  0;">
   <p>
   <div>
+    <%= link_to "Sentence list",
+                :controller => 'tagged_texts', :action => 'list',
+                :id => @sentence.tagged_text_id, :anchor => @sentence.text_index %>
     <%= link_to "Text index", :controller => 'tagged_texts' %>
     <%= link_to "Previous", :id => @prev_sent.id if @prev_sent %>
     <%= link_to "Next", :id => @next_sent.id if @next_sent %>
