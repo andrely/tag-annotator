@@ -68,6 +68,9 @@ class OBNOText
       # words = s.words.sort_by {|w| w.sentence_index }
       words = Word.find(:all, :conditions => ["sentence_id = ?", s.id], :order => "sentence_index", :include => [:tags])
       words.each do |w|
+        if w.orig_string
+          ret_str << "<word>#{w.orig_string}</word>"
+        end
         ret_str << '"<' + w.string + '>"'
         tags = w.tags.sort_by {|t| t.index }
         tags.each do |t|

@@ -19,7 +19,7 @@
                                                         :failure => "tagToggleFailureHandler(request, 'tag_#{w_idx}_#{t_idx}');")}) %>
       </td>
       <td><%= h(tform.lemma) %></td>
-      <td><%= h(tform.clean_out_tag) %></td>
+      <td><%= h(tform.string) %></td>
       <td>
         <%= link_to_remote("del", :update => "tag-#{w_idx}",
                                   :url => {:controller => :tags, :action => :delete, :id => tform.id},
