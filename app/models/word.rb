@@ -5,7 +5,15 @@ class Word < ActiveRecord::Base
   accepts_nested_attributes_for :tags, :allow_destroy => true
 
   @@punctuation_regex = Regexp.compile('^\$?[\.\:\|\?\!]$') # .:|!?
-  
+
+  def printable_string
+    if orig_string
+      return orig_string
+    else
+      return string
+    end
+  end
+
   def norm_string
     if string.match(/\s/)
       return string.split(/\s/).join('_')

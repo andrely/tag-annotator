@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090327104728) do
+ActiveRecord::Schema.define(:version => 20121102111205) do
 
   create_table "bookmarks", :force => true do |t|
     t.integer  "sentence_id"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(:version => 20090327104728) do
   create_table "sentences", :force => true do |t|
     t.integer  "text_index"
     t.integer  "text_id"
-    t.integer  "length"
     t.integer  "tagged_text_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -71,6 +70,9 @@ ActiveRecord::Schema.define(:version => 20090327104728) do
     t.integer  "tag_count"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "orig_string"
+    t.text     "preamble"
+    t.boolean  "end_of_sentence_p"
   end
 
   add_index "words", ["id"], :name => "index_words_on_id"

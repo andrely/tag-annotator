@@ -4,6 +4,17 @@ class Sentence < ActiveRecord::Base
 
   accepts_nested_attributes_for :words, :allow_destroy => true
 
+  def printable_string
+    words = self.words.sort_by {|w| w.sentence_index}
+    strings = words.collect {|w| w.printable_string}
+
+    return strings.join(' ')
+  end
+
+  def length
+    self.words.count
+  end
+
   def orth_string()
     words = self.words.sort_by {|w| w.sentence_index}
     strings = words.collect {|w| w.string}
@@ -34,19 +45,17 @@ class Sentence < ActiveRecord::Base
   def context_html_string(index)
     words = []
 
-    
-
     left = index - 1
     if left >= 0 then
       words << "..." if left >= 1
-      words << self.words[left].string
+      words << self.words[left].printable_string
     end
 
-    words << '<span class="selected-context">' + self.words[index].string + '</span>'
+    words << '<span class="selected-context">' + self.words[index].printable_string + '</span>'
 
     right = index + 1
     if right < self.length then
-      words << self.words[right].string
+      words << self.words[right].printable_string
       words << "..." if right < self.length - 1
     end
 

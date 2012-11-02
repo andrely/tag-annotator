@@ -1,6 +1,6 @@
 <% @sentences.each_with_index do |s, i| -%>
 
 <%= link_to('', '', :name => i) %>
-<%= link_to "#{i + 1}", :controller => 'sentences', :action => 'show', :id => s.id %> - <%= s.orth_string %><br>
+<%= link_to "#{i + 1}", :controller => 'sentences', :action => 'show', :id => s.id %> - <%= s.printable_string %><br>
 
 <% end -%>

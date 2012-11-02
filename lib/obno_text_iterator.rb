@@ -24,7 +24,6 @@ class OBNOTextIterator
     text_index = 0
 
     while sentence = get_next_sentence(@file)
-      sentence.length = sentence.words.count
       sentence.text_index = text_index
       text_index += 1
 
