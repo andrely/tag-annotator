@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
+
 class OBNOText
   attr_accessor :test
 
   @word_regex = Regexp.compile('\"<(.*)>\"')
-  @tag_regex = Regexp.compile('^;?\s+\"(.*)\"\s+([^\!]*?)\s*(<Correct\!>)?$')
+  @tag_regex = Regexp.compile('^;?\s+\"(.*)\"\s+([^\!]*?)\s*(<Correct\!>)?\s*(SELECT\:\d+\s*)*$')
   @punctuation_regex = Regexp.compile('^\$?[\.\:\|\?\!]$') # .:|!?
 
   def initialize()

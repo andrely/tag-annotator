@@ -43,6 +43,9 @@ class TaggedTextsController < ApplicationController
   # POST /tagged_texts.xml
   def create
     @tagged_text = TaggedText.new(params[:tagged_text])
+    @tagged_text.sentence_count = @tagged_text.sentences.count
+
+    @tagged_text.save!
 
     respond_to do |format|
       if @tagged_text.save

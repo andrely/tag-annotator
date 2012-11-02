@@ -10,7 +10,11 @@ class Sentence < ActiveRecord::Base
 
     return strings.join(' ')
   end
-
+  
+  def tag_count
+    words.inject(0) { |i, w| i + w.tag_count }
+  end
+  
   def context_string(index)
     left = index - 1
     if left < 0 then left = 0 end
