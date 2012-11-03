@@ -28,6 +28,11 @@
     </tr>
     <% t_idx += 1 -%>
 <% end -%>
+
+<!--
+    Fold out form for adding new tag/lemma
+-->
+
 <tr>
   <th colspan="5" align="left" >
     <div>
@@ -44,9 +49,36 @@
                                                                  :id => wform.id},
                                                         :with => "'lemma='+$('add_lemma_#{wform.id}').value+'&tag='+$('add_tag_#{wform.id}').value",
                                                         :update => "tag-#{w_idx}"),
-                     :success => "updateTag(#{w_idx})",
-                     :failure => "showError('failed!')") %>
+                     :success => "updateTag(#{w_idx});",
+                     :failure => "showError('failed!');") %>
     </div>
   </th>
+</tr>
+
+<!--
+    Fold out form for changing word form
+-->
+
+<tr>
+  <th colspan="5" align="left">
+    <div>
+      <%= link_to("+", "#",
+                  :id => "change_word_form_fold_#{wform.id}",
+                  :onmousedown => "toggleChangeWordFormForm(#{wform.id});",
+                  :style => "text-decoration:none") %>
+    </div>
+    <div id=<%= "change_word_form_form_#{wform.id}" -%> style='display:none'>
+      <%= text_field_tag("change_word_form_#{wform.id}") %>
+      <%= submit_tag("Change",
+                     :onclick => remote_function(:url => {:controller => :words,
+                                                          :action => :change_form,
+                                                          :id => wform.id},
+                                                 :with => "'word_form='+$('change_word_form_#{wform.id}').value",
+                                                 :update => "tag-#{w_idx}",
+                                                 :success => "updateWord(#{w_idx}, $('change_word_form_#{wform.id}').value);",
+                                                 :failure => "showError('failed!');")) %>
+    </div>
+  </th>
+
 </tr>
 </table>

@@ -20,4 +20,21 @@ class WordsController < ApplicationController
     render(:partial => "sentences/word_details", :locals => {:wform => @word, :sent => @sentence})
   end
 
+  def change_form
+    @word = Word.find(params[:id])
+    new_form = params[:word_form]
+
+    if @word.orig_string
+      @word.orig_string = new_form
+      @word.string = new_form.downcase
+    else
+      @word.string = new_form
+    end
+
+    @word.save
+
+    @sentence = Sentence.find(@word.sentence_id)
+
+    render(:partial => "sentences/word_details", :locals => {:wform => @word, :sent => @sentence})
+  end
 end

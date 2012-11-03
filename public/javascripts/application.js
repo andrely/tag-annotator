@@ -34,3 +34,20 @@ function toggleAddTagForm(w_id) {
         $('add_tag_fold_'+ w_id).update('+');
     }
 }
+
+function toggleChangeWordFormForm(w_id) {
+    $('change_word_form_form_' + w_id).toggle();
+
+    var button = $('change_word_form_fold_'+ w_id);
+
+    if (button.text == '+') {
+        $('change_word_form_fold_'+ w_id).update('-');
+    }
+    else {
+        $('change_word_form_fold_'+ w_id).update('+');
+    }
+}
+
+function updateWord(idx, form) {
+    $('word-' + idx).update(form);
+}
