@@ -39,18 +39,24 @@
             updateTag(focus);
         });
 
-        shortcut.add("right", function() { window.location="<%= url_for :action => 'show', :id => @next_sent.id if @next_sent %>"; });
-        shortcut.add("left", function() { window.location="<%= url_for :action => 'show', :id => @prev_sent.id if @prev_sent %>"; });
-        shortcut.add("1", function() { toggleTag(0); });
-        shortcut.add("2", function() { toggleTag(1); });
-        shortcut.add("3", function() { toggleTag(2); });
-        shortcut.add("4", function() { toggleTag(3); });
-        shortcut.add("5", function() { toggleTag(4); });
-        shortcut.add("6", function() { toggleTag(5); });
-        shortcut.add("7", function() { toggleTag(6); });
-        shortcut.add("8", function() { toggleTag(7); });
-        shortcut.add("9", function() { toggleTag(8); });
-        shortcut.add("0", function() { toggleTag(9); });
+        shortcut.add("right", function() {
+            window.location="<%= url_for :action => 'show', :id => @next_sent.id if @next_sent %>"; },
+            {'disable_in_input': true }
+        );
+        shortcut.add("left", function() {
+            window.location="<%= url_for :action => 'show', :id => @prev_sent.id if @prev_sent %>"; },
+            {'disable_in_input': true }
+        );
+        shortcut.add("1", function() { toggleTag(0); }, {'disable_in_input': true });
+        shortcut.add("2", function() { toggleTag(1); }, {'disable_in_input': true });
+        shortcut.add("3", function() { toggleTag(2); }, {'disable_in_input': true });
+        shortcut.add("4", function() { toggleTag(3); }, {'disable_in_input': true });
+        shortcut.add("5", function() { toggleTag(4); }, {'disable_in_input': true });
+        shortcut.add("6", function() { toggleTag(5); }, {'disable_in_input': true });
+        shortcut.add("7", function() { toggleTag(6); }, {'disable_in_input': true });
+        shortcut.add("8", function() { toggleTag(7); }, {'disable_in_input': true });
+        shortcut.add("9", function() { toggleTag(8); }, {'disable_in_input': true });
+        shortcut.add("0", function() { toggleTag(9); }, {'disable_in_input': true });
     }
 </script>
 
