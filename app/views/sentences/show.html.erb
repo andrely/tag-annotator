@@ -6,31 +6,7 @@
 
             Event.observe(window, 'load', function() {
                 updateTag(focus);
-                shortcut.add("space", function() {
-                    focus = focus + 1;
-                    if (focus >= length) { focus = 0; }
-                    updateTag(focus);
-                });
-
-                shortcut.add(".", function() {
-                    focus = focus - 1;
-                    if (focus < 0) { focus = length - 1; }
-                    updateTag(focus);
-                });
-
-                shortcut.add("right", function() { window.location="<%= url_for :action => 'show', :id => @next_sent.id if @next_sent %>"; });
-                shortcut.add("left", function() { window.location="<%= url_for :action => 'show', :id => @prev_sent.id if @prev_sent %>"; });
-                // shortcut.add("enter", function() { $$("form.edit_sentence")[0].submit(); } );
-                shortcut.add("1", function() { toggleTag(0); });
-                shortcut.add("2", function() { toggleTag(1); });
-                shortcut.add("3", function() { toggleTag(2); });
-                shortcut.add("4", function() { toggleTag(3); });
-                shortcut.add("5", function() { toggleTag(4); });
-                shortcut.add("6", function() { toggleTag(5); });
-                shortcut.add("7", function() { toggleTag(6); });
-                shortcut.add("8", function() { toggleTag(7); });
-                shortcut.add("9", function() { toggleTag(8); });
-                shortcut.add("0", function() { toggleTag(9); });
+                addShortcuts();
             });
 
     function updateTag(index) {
@@ -48,6 +24,33 @@
         elt = $(id)
         // elt.checked = !elt.checked
         elt.click()
+    }
+
+    function addShortcuts() {
+        shortcut.add("space", function() {
+            focus = focus + 1;
+            if (focus >= length) { focus = 0; }
+            updateTag(focus);
+        });
+
+        shortcut.add(".", function() {
+            focus = focus - 1;
+            if (focus < 0) { focus = length - 1; }
+            updateTag(focus);
+        });
+
+        shortcut.add("right", function() { window.location="<%= url_for :action => 'show', :id => @next_sent.id if @next_sent %>"; });
+        shortcut.add("left", function() { window.location="<%= url_for :action => 'show', :id => @prev_sent.id if @prev_sent %>"; });
+        shortcut.add("1", function() { toggleTag(0); });
+        shortcut.add("2", function() { toggleTag(1); });
+        shortcut.add("3", function() { toggleTag(2); });
+        shortcut.add("4", function() { toggleTag(3); });
+        shortcut.add("5", function() { toggleTag(4); });
+        shortcut.add("6", function() { toggleTag(5); });
+        shortcut.add("7", function() { toggleTag(6); });
+        shortcut.add("8", function() { toggleTag(7); });
+        shortcut.add("9", function() { toggleTag(8); });
+        shortcut.add("0", function() { toggleTag(9); });
     }
 </script>
 
