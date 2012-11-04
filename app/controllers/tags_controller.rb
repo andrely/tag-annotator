@@ -1,4 +1,7 @@
 class TagsController < ApplicationController
+  auto_complete_for :tag, :string
+  auto_complete_for :tag, :lemma
+
   def toggle
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
     response.headers["Pragma"] = "no-cache"

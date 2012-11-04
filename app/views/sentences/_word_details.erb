@@ -42,8 +42,14 @@
                   :style => "text-decoration:none") %>
     </div>
     <div id=<%= "add_tag_form_#{wform.id}" -%> style='display:none'>
-      <%= text_field_tag("add_tag_#{wform.id}") %>
-      <%= text_field_tag("add_lemma_#{wform.id}") %>
+      <%= text_field_with_auto_complete_with_id_checking(
+                  :tag, :string, {:id => "add_tag_#{wform.id}"},
+                  {:url => {:controller => :tags, :action => "auto_complete_for_tag_string"},
+                  :method => :get}) %>
+      <%= text_field_with_auto_complete_with_id_checking(
+                  :tag, :lemma, {:id => "add_lemma_#{wform.id}"},
+                  {:url => {:controller => :tags, :action=> "auto_complete_for_tag_lemma"},
+                  :method => :get}) %>
       <%= submit_tag('Add', :onclick => remote_function(:url => {:controller => :words,
                                                                  :action => :add_tag,
                                                                  :id => wform.id},
