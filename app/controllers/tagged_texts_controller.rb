@@ -42,7 +42,13 @@ class TaggedTextsController < ApplicationController
   # POST /tagged_texts
   # POST /tagged_texts.xml
   def create
-    @tagged_text = TaggedText.new(params[:tagged_text])
+    @tagged_text = TaggedText.new()
+    @tagged_text.encoding = params[:tagged_text][:encoding]
+    @tagged_text.format = params[:tagged_text][:format]
+    @tagged_text.uploaded_file = params[:tagged_text][:uploaded_file]
+    @tagged_text.title = params[:tagged_text][:title]
+    @tagged_text.comment = params[:tagged_text][:comment]
+
     @tagged_text.sentence_count = @tagged_text.sentences.count
 
     @tagged_text.save!
@@ -91,7 +97,7 @@ class TaggedTextsController < ApplicationController
   def download
     @tagged_text = TaggedText.find(params[:id])
     
-    str = Iconv.conv('iso8859-1', 'utf-8', OBNOText.textString(@tagged_text))
+    str = Iconv.conv(@tagged_text.encoding, 'utf-8', OBNOText.textString(@tagged_text))
 
     send_data(str, :filename => @tagged_text.filename, :type => 'plain/txt', :disposition => 'attachment')
   end

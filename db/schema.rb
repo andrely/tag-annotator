@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121102111205) do
+ActiveRecord::Schema.define(:version => 20121105090123) do
 
   create_table "bookmarks", :force => true do |t|
     t.integer  "sentence_id"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(:version => 20121102111205) do
     t.datetime "updated_at"
     t.string   "title"
     t.text     "comment"
+    t.string   "encoding"
+    t.string   "format"
   end
 
   create_table "tags", :force => true do |t|

@@ -13,9 +13,14 @@ class TaggedText < ActiveRecord::Base
   def uploaded_file=(file_field)
     self.filename = base_part_of(file_field.original_filename)
 
-    f_str = Iconv.conv('utf-8', 'iso8859-1', file_field.read)
+    f_str = Iconv.conv('utf-8', self.encoding, file_field.read)
 
     f = StringIO.new(f_str)
+
+    if self.format != "OBT":
+      raise RuntimeError
+    end
+
     obit = OBNOTextIterator.new(f)
     obit.each_sentence {|s| sentences << s}
     f.close()
@@ -163,5 +168,13 @@ class TaggedText < ActiveRecord::Base
     File.open(filename, 'w') do |f|
       f.puts seen_classes.keys.sort.join("\n")
     end
+  end
+
+  def self.encodings
+    ["utf-8", "latin-1"]
+  end
+
+  def self.formats
+    ["OBT", "VRT"]
   end
 end
