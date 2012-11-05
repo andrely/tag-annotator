@@ -58,6 +58,23 @@
         shortcut.add("9", function() { toggleTag(8); }, {'disable_in_input': true });
         shortcut.add("0", function() { toggleTag(9); }, {'disable_in_input': true });
     }
+
+    function removeShortcuts() {
+        shortcut.remove("space");
+        shortcut.remove(".");
+        shortcut.remove("right");
+        shortcut.remove("left");
+        shortcut.remove("1");
+        shortcut.remove("2");
+        shortcut.remove("3");
+        shortcut.remove("4");
+        shortcut.remove("5");
+        shortcut.remove("6");
+        shortcut.remove("7");
+        shortcut.remove("8");
+        shortcut.remove("9");
+        shortcut.remove("0");
+    }
 </script>
 
 <p>
