@@ -74,7 +74,13 @@ class OBNOText
         ret_str << '"<' + w.string + '>"'
         tags = w.tags.sort_by {|t| t.index }
         tags.each do |t|
-          ret_str << "\t" + '"' + t.lemma + '" ' + t.string + (t.correct ? ' <Correct!>' : '')
+          tag_str = t.string
+
+          if w.end_of_sentence_p
+            tag_str = tag_str.split.join(" <<< ")
+          end
+
+          ret_str << "\t" + '"' + t.lemma + '" ' + tag_str + (t.correct ? ' <Correct!>' : '')
         end
       end
     end
