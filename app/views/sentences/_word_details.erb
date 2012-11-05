@@ -34,22 +34,25 @@
 -->
 
 <tr>
-  <th colspan="5" align="left" >
+  <td colspan="5" align="left" >
     <div>
       <%= link_to("+", "#",
                   :id => "add_tag_fold_#{wform.id}",
                   :onmousedown => "toggleAddTagForm(#{wform.id});",
                   :style => "text-decoration:none") %>
+      Add tag
     </div>
     <div id=<%= "add_tag_form_#{wform.id}" -%> style='display:none'>
-      <%= text_field_with_auto_complete_with_id_checking(
-                  :tag, :string, {:id => "add_tag_#{wform.id}", :onfocus => "removeShortcuts();", :onblur => "addShortcuts();"},
-                  {:url => {:controller => :tags, :action => "auto_complete_for_tag_string"},
-                  :method => :get}) %>
+      Lemma:
       <%= text_field_with_auto_complete_with_id_checking(
                   :tag, :lemma, {:id => "add_lemma_#{wform.id}", :onfocus => "removeShortcuts();", :onblur => "addShortcuts();"},
                   {:url => {:controller => :tags, :action=> "auto_complete_for_tag_lemma"},
                   :method => :get}) %>
+      Tag:
+      <%= text_field_with_auto_complete_with_id_checking(
+                  :tag, :string, {:id => "add_tag_#{wform.id}", :onfocus => "removeShortcuts();", :onblur => "addShortcuts();"},
+                  {:url => {:controller => :tags, :action => "auto_complete_for_tag_string"},
+                   :method => :get}) %>
       <%= submit_tag('Add', :onclick => remote_function(:url => {:controller => :words,
                                                                  :action => :add_tag,
                                                                  :id => wform.id},
@@ -58,7 +61,7 @@
                      :success => "updateTag(#{w_idx});",
                      :failure => "showError('failed!');") %>
     </div>
-  </th>
+  </td>
 </tr>
 
 <!--
@@ -66,14 +69,16 @@
 -->
 
 <tr>
-  <th colspan="5" align="left">
+  <td colspan="5" align="left">
     <div>
       <%= link_to("+", "#",
                   :id => "change_word_form_fold_#{wform.id}",
                   :onmousedown => "toggleChangeWordFormForm(#{wform.id});",
                   :style => "text-decoration:none") %>
+      Change word
     </div>
     <div id=<%= "change_word_form_form_#{wform.id}" -%> style='display:none'>
+      New word:
       <%= text_field_tag("change_word_form_#{wform.id}") %>
       <%= submit_tag("Change",
                      :onclick => remote_function(:url => {:controller => :words,
@@ -84,7 +89,7 @@
                                                  :success => "updateWord(#{w_idx}, $('change_word_form_#{wform.id}').value);",
                                                  :failure => "showError('failed!');")) %>
     </div>
-  </th>
+  </td>
 
 </tr>
 </table>
