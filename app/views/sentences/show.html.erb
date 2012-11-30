@@ -30,14 +30,16 @@
         shortcut.add("space", function() {
             focus = focus + 1;
             if (focus >= length) { focus = 0; }
-            updateTag(focus);
-        });
+            updateTag(focus);},
+            {'disable_in_input': true }
+        );
 
         shortcut.add(".", function() {
             focus = focus - 1;
             if (focus < 0) { focus = length - 1; }
-            updateTag(focus);
-        });
+            updateTag(focus);},
+            {'disable_in_input': true }
+        );
 
         shortcut.add("right", function() {
             window.location="<%= url_for :action => 'show', :id => @next_sent.id if @next_sent %>"; },
