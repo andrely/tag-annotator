@@ -45,12 +45,14 @@
     <div id=<%= "add_tag_form_#{wform.id}" -%> style='display:none'>
       Lemma:
       <%= text_field_with_auto_complete_with_id_checking(
-                  :tag, :lemma, {:id => "add_lemma_#{wform.id}", :onfocus => "removeShortcuts();", :onblur => "addShortcuts();"},
+                  :tag, :lemma, {:id => "add_lemma_#{wform.id}", :onfocus => "removeShortcuts();",
+                  :onblur => "addShortcuts();", :onclick => "removeShortcuts();", :onkeydown => "removeShortcuts();"},
                   {:url => {:controller => :tags, :action=> "auto_complete_for_tag_lemma"},
                   :method => :get}) %>
       Tag:
       <%= text_field_with_auto_complete_with_id_checking(
-                  :tag, :string, {:id => "add_tag_#{wform.id}", :onfocus => "removeShortcuts();", :onblur => "addShortcuts();"},
+                  :tag, :string, {:id => "add_tag_#{wform.id}", :onfocus => "removeShortcuts();",
+                  :onblur => "addShortcuts();", :onclick => "removeShortcuts();", :onkeydown => "removeShortcuts();"},
                   {:url => {:controller => :tags, :action => "auto_complete_for_tag_string"},
                    :method => :get}) %>
       <%= submit_tag('Add', :onclick => remote_function(:url => {:controller => :words,
@@ -79,7 +81,8 @@
     </div>
     <div id=<%= "change_word_form_form_#{wform.id}" -%> style='display:none'>
       New word:
-      <%= text_field_tag("change_word_form_#{wform.id}") %>
+      <%= text_field_tag("change_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                         :onblur => "addShortcuts();", :onclick => "removeShortcuts();", :onkeydown => "removeShortcuts();") %>
       <%= submit_tag("Change",
                      :onclick => remote_function(:url => {:controller => :words,
                                                           :action => :change_form,
