@@ -7,11 +7,10 @@
 #   timeout: 5000
 
 development:
-  adapter: mysql
-  database: tag_annotator_dev
-  username: root
-  password: root
-  host: localhost
+  adapter: sqlite3
+  database: db/tag_annotator_dev.sqlite3
+  pool: 5
+  timeout: 5000
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -24,8 +23,8 @@ test:
 
 production:
   adapter: mysql
-  database: tagger_annotate_production
-  username: andrely
-  password: tagann2009
+  database: tag_annotator_0_8_prod
+  username: tag-annotator
+  password: secret
   host: localhost
   encoding: utf8
