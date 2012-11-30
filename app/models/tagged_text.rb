@@ -171,7 +171,7 @@ class TaggedText < ActiveRecord::Base
   end
 
   def self.encodings
-    ["utf-8", "latin-1"]
+    ["utf-8", "latin1"]
   end
 
   def self.formats
