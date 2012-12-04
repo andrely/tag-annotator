@@ -1,0 +1,107 @@
+<word>Reise</word>
+"<reise>"
+	"reise" verb inf i1 a3 pa5
+	"reise" verb inf tr1 pa1 rl4 pa2
+	"reise" subst appell fem ub ent	<Correct!>
+	"reise" subst appell mask ub ent
+<word>til</word>
+"<til>"
+	"til" sbu
+	"til" prep	<Correct!>
+<word>Kina</word>
+"<kina>"
+	"Kina" subst prop <*>	<Correct!>
+<word>med</word>
+"<med>"
+	"med" prep	<Correct!>
+<word>en</word>
+"<en>"
+	"en" det mask ent kvant	<Correct!>
+	"en" pron ent pers hum
+	"en" adv
+	"ene" verb imp tr1
+<word>stor</word>
+"<stor>"
+	"stor" adj ub m/f ent pos	<Correct!>
+<word>plakat</word>
+"<plakat>"
+	"plakat" adj ub m/f ent pos
+	"plakat" adj fl pos
+	"plakat" adj be ent pos
+	"plakat" adj nøyt ub ent pos
+	"plakat" subst appell mask ub ent	<Correct!>
+<word>:</word>
+"<:>"
+	"$:" clb <<< <kolon>	<Correct!>
+<word>«</word>
+"<«>"
+	"$"" <anf>	<Correct!>
+<word>Har</word>
+"<har>"
+	"ha" verb pres pa1 d5 a6 tr12 rl6 pa3 tr6 d6/til <aux1/perf_part> pa6	<Correct!>
+<word>du</word>
+"<du>"
+	"du" pron ent pers hum nom 2	<Correct!>
+<word>sett</word>
+"<sett>"
+	"sett" subst appell nøyt ub ent
+	"sett" subst appell nøyt ub fl
+	"se" verb perf-part tr1 tr11 tr2 pa2 pa5 tr11/til tr3 tr4	<Correct!>
+	"se" adj nøyt ub ent <perf-part> tr1 tr11 tr2 pa2 pa5 tr11/til tr3 tr4
+	"se" adj ub m/f ent <perf-part> tr1 tr11 tr2 pa2 pa5 tr11/til tr3 tr4
+	"sette" verb imp tr1 pa1 rl4 pa2 a6 pa5 rl6 pa1/til pa3 a9 tr23
+<word>denne</word>
+"<denne>"
+	"denne" det dem mask ent	<Correct!>
+	"denne" pron mask fem ent pers 3
+	"denne" det dem fem ent
+<word>gutten</word>
+"<gutten>"
+	"gutt" subst appell mask be ent	<Correct!>
+<word>?</word>
+"<?>"
+	"$?" clb <spm>
+<word>»</word>
+"<»>"
+	"$"" <anf>	<Correct!>
+<word>?</word>
+"<?>"
+	"$?" clb <<< <spm>	<Correct!>
+<word>Hvordan</word>
+"<hvordan>"
+	"hvordan" adv	<Correct!>
+<word>etterlyser</word>
+"<etterlyser>"
+	"etterlyse" verb pres tr1	<Correct!>
+<word>man</word>
+"<man>"
+	"man" pron ent pers hum nom	<Correct!>
+	"man" subst appell fem ub ent
+	"man" subst appell mask ub ent
+	"mane" verb imp pa1 tr11/til d6/til
+<word>en</word>
+"<en>"
+	"en" det mask ent kvant	<Correct!>
+	"en" pron ent pers hum
+	"en" adv
+	"ene" verb imp tr1
+<word>savnet</word>
+"<savnet>"
+	"savn" subst appell nøyt be ent
+	"savne" verb pret tr8
+	"savne" verb perf-part tr8
+	"savne" adj nøyt ub ent <perf-part> tr8
+	"savne" adj ub m/f ent <perf-part> tr8	<Correct!>
+<word>nordmann</word>
+"<nordmann>"
+	"nordmann" subst appell mask ub ent	<Correct!>
+<word>i</word>
+"<i>"
+	"i" prep	<Correct!>
+	"i" subst appell mask ub ent
+<word>Kina</word>
+"<kina>"
+	"Kina" subst prop <*>	<Correct!>
+<word>?</word>
+"<?>"
+	"$?" clb <<< <spm>	<Correct!>

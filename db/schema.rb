@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105090123) do
+ActiveRecord::Schema.define(:version => 20121204122516) do
 
   create_table "bookmarks", :force => true do |t|
     t.integer  "sentence_id"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20121105090123) do
     t.integer  "word_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "capitalized"
   end
 
   add_index "tags", ["id"], :name => "index_tags_on_id"

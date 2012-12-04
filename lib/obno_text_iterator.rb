@@ -10,9 +10,14 @@ class OBNOTextIterator
     @file = readable
 
     @word_regex = Regexp.compile('\"<(.*)>\"')
+    @tag_lemma_regex = Regexp.compile('^;?\s+\"(.*)\"(.*)')
     @tag_regex = Regexp.compile('^;?\s+\"(.*)\"\s+([^\!]*?)\s*(<\*>\s*)?(<\*\w+>)?(<Correct\!>)?\s*(SELECT\:\d+\s*)*$')
     @punctuation_regex = Regexp.compile('^\$?[\.\:\|\?\!]$') # .:|!?
     @orig_word_regex = Regexp.compile('^<word>(.*)</word>$')
+
+    @correct_marker = '<Correct!>'
+    @capitalized_marker = '<*>'
+    @end_of_sentence_marker = '<<<'
 
     @use_static_punctuation = use_static_punctuation
   end
@@ -36,8 +41,13 @@ class OBNOTextIterator
     sentence = Sentence.new
     sent_index = 0
 
-    begin
-      while word = get_next_word(f)
+
+    while TRUE
+      begin
+        word = get_next_word(f)
+
+        break if word.nil?
+
         word.sentence_index = sent_index
         word.tag_count = word.tags.count
         sentence.words << word
@@ -46,12 +56,6 @@ class OBNOTextIterator
 
         break if word.is_punctuation? and @use_static_punctuation
         break if word.end_of_sentence_p and not @use_static_punctuation
-      end
-    rescue EOFError
-      if @peeked_word_record or @peeked_orig_word_record
-        raise RuntimeError
-      else
-        @postamble = @peeked_preamble
       end
     end
 
@@ -62,7 +66,11 @@ class OBNOTextIterator
 
   def get_next_word(f)
     word = Word.new
-    word.string, word.orig_string, word.preamble = get_word_header(f)
+    begin
+      word.string, word.orig_string, word.preamble = get_word_header(f)
+    rescue EOFError
+      return nil
+    end
 
     get_word_tags(f, word)
 
@@ -75,10 +83,16 @@ class OBNOTextIterator
     tags = []
     tag_index = 0
 
-    while line = f.readline
+    while TRUE
+      begin
+        line = f.readline
+      rescue EOFError
+        break
+      end
+
       if is_tag_line(line)
         tag = Tag.new
-        tag.lemma, tag.string, tag.correct, capitalized, u = get_tag(line)
+        tag.lemma, tag.string, tag.correct, tag.capitalized, u = get_tag(line)
 
         tag.index = tag_index
         word.end_of_sentence_p = u
@@ -156,18 +170,32 @@ class OBNOTextIterator
   end
 
   def get_tag(line)
-    if (m = line.match(@tag_regex)) then
+    if (m = line.match(@tag_lemma_regex)) then
       lemma = m[1]
-      tag = m[2]
-      correct = !m[5].nil?
-      capitalized = !m[3].nil?
-      end_of_sentence = nil
+      rest = m[2].split
 
-      # detect end of sentence marker and remove it
-      if tag.match("\s+<<<\s+")
-        tag = tag.gsub(/\s+<<<\s+/, " ")
-        end_of_sentence = true
+      if rest.include? @correct_marker then
+        correct = TRUE
+        rest.delete(@correct_marker)
+      else
+        correct = FALSE
       end
+
+      if rest.include? @capitalized_marker then
+        capitalized = TRUE
+        rest.delete(@capitalized_marker)
+      else
+        capitalized = FALSE
+      end
+
+      if rest.include? @end_of_sentence_marker then
+        end_of_sentence = TRUE
+        rest.delete(@end_of_sentence_marker)
+      else
+        end_of_sentence = FALSE
+      end
+
+      tag = rest.join(" ")
 
       return [lemma, tag, correct, capitalized, end_of_sentence]
     end

@@ -80,7 +80,9 @@ class OBNOText
             tag_str = tag_str.split.join(" <<< ")
           end
 
-          ret_str << "\t" + '"' + t.lemma + '" ' + tag_str + (t.correct ? ' <Correct!>' : '')
+          ret_str << "\t" + '"' + t.lemma + '" ' + tag_str +
+              (t.capitalized ? ' <*>' : '') +
+              (t.correct ? ' <Correct!>' : '')
         end
       end
     end
