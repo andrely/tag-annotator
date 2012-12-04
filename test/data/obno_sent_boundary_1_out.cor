@@ -1,3 +1,18 @@
+<word>Museumsparadokser</word>
+"<museumsparadokser>"
+	"Museumsparadokser" subst prop	<Correct!>
+<word>|</word>
+"<|>"
+	"$|" clb <<< <overskrift>	<Correct!>
+<word>|</word>
+"<|>"
+	"$|" clb <<< <overskrift>	<Correct!>
+<word>Verdensarv</word>
+"<verdensarv>"
+	"Verdensarv" subst prop	<Correct!>
+<word>.</word>
+"<.>"
+	"$." clb <<< <punkt>	<Correct!>
 <word>Reise</word>
 "<reise>"
 	"reise" verb inf i1 a3 pa5

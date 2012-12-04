@@ -26,10 +26,14 @@ class OBNOTextIteratorTest < Test::Unit::TestCase
 
     text.save
 
-    assert_equal(3, text.sentences.count)
-    assert_equal(8, text.sentences[0].length)
-    assert_equal(9, text.sentences[1].length)
-    assert_equal(9, text.sentences[2].length)
+    assert_equal(6, text.sentences.count)
+    assert_equal(2, text.sentences[0].length)
+    assert_equal(1, text.sentences[1].length)
+    assert_equal(2, text.sentences[2].length)
+    assert_equal(8, text.sentences[3].length)
+    assert_equal(8, text.sentences[3].length)
+    assert_equal(9, text.sentences[4].length)
+    assert_equal(9, text.sentences[5].length)
 
     out = OBNOText.textString(text)
     out.tr_s!("\t ", ' ').strip!
