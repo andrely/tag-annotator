@@ -44,11 +44,9 @@
     </div>
     <div id=<%= "add_tag_form_#{wform.id}" -%> style='display:none'>
       Lemma:
-      <%= text_field_with_auto_complete_with_id_checking(
-                  :tag, :lemma, {:id => "add_lemma_#{wform.id}", :onfocus => "removeShortcuts();",
-                  :onblur => "addShortcuts();", :onclick => "removeShortcuts();", :onkeydown => "removeShortcuts();"},
-                  {:url => {:controller => :tags, :action=> "auto_complete_for_tag_lemma"},
-                  :method => :get}) %>
+      <%= text_field_tag("add_lemma_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                         :onblur => "addShortcuts();", :onclick => "removeShortcuts();",
+                         :onkeydown => "removeShortcuts();") %>
       Tag:
       <%= text_field_with_auto_complete_with_id_checking(
                   :tag, :string, {:id => "add_tag_#{wform.id}", :onfocus => "removeShortcuts();",
