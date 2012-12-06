@@ -1,6 +1,9 @@
 <% w_idx = wform.sentence_index -%>
 <table>
 <tr><th colspan='5' align='left'><%= sent.context_html_string(w_idx) %></th></tr>
+<% if wform.orig_string %>
+        <tr><td colspan='5' align='left'>OBT word form: <%= wform.string %></td></tr>
+<% end %>
 <% t_idx = 1 -%>
 <% wform.tags.each do |tform| -%>
 
@@ -80,12 +83,18 @@
     <div id=<%= "change_word_form_form_#{wform.id}" -%> style='display:none'>
       New word:
       <%= text_field_tag("change_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
-                         :onblur => "addShortcuts();", :onclick => "removeShortcuts();", :onkeydown => "removeShortcuts();") %>
+                         :onblur => "addShortcuts();", :onclick => "removeShortcuts();",
+                         :onkeydown => "removeShortcuts();") %>
+      <%= check_box_tag("enable_obt_word_form_#{wform.id}", FALSE, FALSE,
+                        :onclick => "toggleOBTWordFormInput(#{wform.id})") %>
+      <%= text_field_tag("change_obt_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                         :onblur => "addShortcuts();", :onclick => "removeShortcuts();",
+                         :onkeydown => "removeShortcuts();", :disabled => TRUE) %>
       <%= submit_tag("Change",
                      :onclick => remote_function(:url => {:controller => :words,
                                                           :action => :change_form,
                                                           :id => wform.id},
-                                                 :with => "'word_form='+$('change_word_form_#{wform.id}').value",
+                                                 :with => "'word_form='+$('change_word_form_#{wform.id}').value+'&obt_word_form='+$('change_obt_word_form_#{wform.id}').value",
                                                  :update => "tag-#{w_idx}",
                                                  :success => "updateWord(#{w_idx}, $('change_word_form_#{wform.id}').value);",
                                                  :failure => "showError('failed!');")) %>

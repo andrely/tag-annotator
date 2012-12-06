@@ -23,10 +23,15 @@ class WordsController < ApplicationController
   def change_form
     @word = Word.find(params[:id])
     new_form = params[:word_form]
+    new_obt_form = params[:obt_word_form]
 
     if @word.orig_string
       @word.orig_string = new_form
-      @word.string = new_form.downcase
+      if new_obt_form.empty?
+        @word.string = new_form.downcase
+      else
+        @word.string = new_obt_form
+      end
     else
       @word.string = new_form
     end
