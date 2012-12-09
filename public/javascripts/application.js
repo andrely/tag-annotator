@@ -22,29 +22,26 @@ function tagToggleFailureHandler(request, tag_id) {
     $(tag_id).checked = !$(tag_id).checked;
 }
 
-function toggleAddTagForm(w_id) {
-    $('add_tag_form_' + w_id).toggle();
+/**
+ *
+ * Toggles showing/hiding an element and updates the button to show the state
+ * of the element.
+ *
+ * Used by sentences/_fold_out_button.erb
+ *
+ * @param elt_id ID of element to show/hide
+ * @param button_id The ID og the button (div).
+ */
+function toggleEltFromButton(elt_id, button_id) {
+    $(elt_id).toggle();
 
-    var button = $('add_tag_fold_'+ w_id);
-
-    if (button.text == '+') {
-        $('add_tag_fold_'+ w_id).update('-');
-    }
-    else {
-        $('add_tag_fold_'+ w_id).update('+');
-    }
-}
-
-function toggleChangeWordFormForm(w_id) {
-    $('change_word_form_form_' + w_id).toggle();
-
-    var button = $('change_word_form_fold_'+ w_id);
+    var button = $(button_id);
 
     if (button.text == '+') {
-        $('change_word_form_fold_'+ w_id).update('-');
+        $(button_id).update('-');
     }
     else {
-        $('change_word_form_fold_'+ w_id).update('+');
+        $(button_id).update('+');
     }
 }
 

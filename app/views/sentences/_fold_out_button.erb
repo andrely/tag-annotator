@@ -1,0 +1,17 @@
+<!-- Partial generating +/- toggling button for showing/hiding page elements.
+
+     ERB render call ust proved the HTML id and text of the button and the element to toggle
+     as local variables:
+
+      - Button ID: button_id
+      - Button text: button_text
+      - Toggled element id: fold_out_elt_id -->
+
+<!-- TODO generate button_id internally in the partial -->
+
+<%= link_to("+", "#",
+            :id => button_id,
+            :onmousedown => "toggleEltFromButton(#{fold_out_elt_id}, #{button_id});",
+            :style => "text-decoration:none") %>
+
+<%= button_text %>

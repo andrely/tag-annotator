@@ -38,13 +38,12 @@
 
 <tr>
   <td colspan="5" align="left" >
-    <div>
-      <%= link_to("+", "#",
-                  :id => "add_tag_fold_#{wform.id}",
-                  :onmousedown => "toggleAddTagForm(#{wform.id});",
-                  :style => "text-decoration:none") %>
-      Add tag
-    </div>
+      <div>
+          <%= render(:partial => 'fold_out_button',
+                     :locals => {:fold_out_elt_id => "add_tag_form_#{wform.id}",
+                                 :button_id => "add_tag_button_#{wform.id}",
+                                 :button_text => "Add tag"}) %>
+      </div>
     <div id=<%= "add_tag_form_#{wform.id}" -%> style='display:none'>
       Lemma:
       <%= text_field_tag("add_lemma_#{wform.id}", "", :onfocus => "removeShortcuts();",
@@ -73,13 +72,12 @@
 
 <tr>
   <td colspan="5" align="left">
-    <div>
-      <%= link_to("+", "#",
-                  :id => "change_word_form_fold_#{wform.id}",
-                  :onmousedown => "toggleChangeWordFormForm(#{wform.id});",
-                  :style => "text-decoration:none") %>
-      Change word
-    </div>
+      <div>
+          <%= render(:partial => 'fold_out_button',
+                     :locals => {:fold_out_elt_id => "change_word_form_form_#{wform.id}",
+                                 :button_id => "change_word_button_#{wform.id}",
+                                 :button_text => "Change word"}) %>
+      </div>
     <div id=<%= "change_word_form_form_#{wform.id}" -%> style='display:none'>
       New word:
       <%= text_field_tag("change_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
