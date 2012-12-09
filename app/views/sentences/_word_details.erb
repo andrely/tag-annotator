@@ -39,6 +39,7 @@
 <tr>
   <td colspan="5" align="left" >
       <div>
+          <!-- Button for folding out add tag form div -->
           <%= render(:partial => 'fold_out_button',
                      :locals => {:fold_out_elt_id => "add_tag_form_#{wform.id}",
                                  :button_id => "add_tag_button_#{wform.id}",
@@ -66,38 +67,49 @@
   </td>
 </tr>
 
-<!--
-    Fold out form for changing word form
--->
+    <!--
+        Fold out form for changing word form
+    -->
 
-<tr>
-  <td colspan="5" align="left">
-      <div>
-          <%= render(:partial => 'fold_out_button',
-                     :locals => {:fold_out_elt_id => "change_word_form_form_#{wform.id}",
-                                 :button_id => "change_word_button_#{wform.id}",
-                                 :button_text => "Change word"}) %>
-      </div>
-    <div id=<%= "change_word_form_form_#{wform.id}" -%> style='display:none'>
-      New word:
-      <%= text_field_tag("change_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
-                         :onblur => "addShortcuts();", :onclick => "removeShortcuts();",
-                         :onkeydown => "removeShortcuts();") %>
-      <%= check_box_tag("enable_obt_word_form_#{wform.id}", FALSE, FALSE,
-                        :onclick => "toggleOBTWordFormInput(#{wform.id})") %>
-      <%= text_field_tag("change_obt_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
-                         :onblur => "addShortcuts();", :onclick => "removeShortcuts();",
-                         :onkeydown => "removeShortcuts();", :disabled => TRUE) %>
-      <%= submit_tag("Change",
-                     :onclick => remote_function(:url => {:controller => :words,
-                                                          :action => :change_form,
-                                                          :id => wform.id},
-                                                 :with => "'word_form='+$('change_word_form_#{wform.id}').value+'&obt_word_form='+$('change_obt_word_form_#{wform.id}').value",
-                                                 :update => "tag-#{w_idx}",
-                                                 :success => "updateWord(#{w_idx}, $('change_word_form_#{wform.id}').value);",
-                                                 :failure => "showError('failed!');")) %>
-    </div>
-  </td>
+    <tr>
+        <td colspan="5" align="left">
+            <div>
+                <!-- Button for folding out change word form div -->
+                <%= render(:partial => 'fold_out_button',
+                           :locals => {:fold_out_elt_id => "change_word_form_form_#{wform.id}",
+                                       :button_id => "change_word_button_#{wform.id}",
+                                       :button_text => "Change word"}) %>
+            </div>
+            <div id=<%= "change_word_form_form_#{wform.id}" -%> style='display:none;'>
+            New word:
+            <%= text_field_tag("change_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                               :onblur => "addShortcuts();", :onclick => "removeShortcuts();",
+                               :onkeydown => "removeShortcuts();") %>
 
-</tr>
+            <!-- If there are separate OBT word form create foldout form for changing it. -->
+            <% if wform.orig_string %>
+                <%= render(:partial => 'fold_out_button',
+                           :locals => {:fold_out_elt_id => "change_obt_word_form_span_#{wform.id}",
+                                       :button_id => "change_obt_word_button_#{wform.id}"}) %>
+
+                <span id=<%= "change_obt_word_form_span_#{wform.id}" -%> style='display:none;'>
+                New OBT word:
+                <%= text_field_tag("change_obt_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                                   :onblur => "addShortcuts();", :onclick => "removeShortcuts();",
+                                   :onkeydown => "removeShortcuts();") %>
+
+                </span>
+            <% end %>
+
+            <%= submit_tag("Change",
+                           :onclick => remote_function(:url => {:controller => :words,
+                                                                :action => :change_form,
+                                                                :id => wform.id},
+                                                       :with => "'word_form='+$('change_word_form_#{wform.id}').value+'&obt_word_form='+$('change_obt_word_form_#{wform.id}').value",
+                                                       :update => "tag-#{w_idx}",
+                                                       :success => "updateWord(#{w_idx}, $('change_word_form_#{wform.id}').value);",
+                                                       :failure => "showError('failed!');")) %>
+            </div>
+        </td>
+    </tr>
 </table>

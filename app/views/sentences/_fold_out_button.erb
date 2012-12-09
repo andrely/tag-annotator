@@ -5,11 +5,19 @@
 
       - Button ID: button_id
       - Button text: button_text
-      - Toggled element id: fold_out_elt_id -->
+      - Toggled element id: fold_out_elt_id
+      - Initial state of button: initial_state
+        TRUE displays '+', FALSE displays '-' -->
 
 <!-- TODO generate button_id internally in the partial -->
 
-<%= link_to("+", "#",
+<%
+   # Default values
+   button_text = "" if local_assigns[:button_text].nil?
+   initial_state = TRUE if local_assigns[:initial_state].nil?
+%>
+
+<%= link_to(initial_state ? "+" : "-", "#",
             :id => button_id,
             :onmousedown => "toggleEltFromButton(#{fold_out_elt_id}, #{button_id});",
             :style => "text-decoration:none") %>
