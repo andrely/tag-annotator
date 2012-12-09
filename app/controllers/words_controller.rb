@@ -22,8 +22,8 @@ class WordsController < ApplicationController
 
   def change_form
     @word = Word.find(params[:id])
-    new_form = params[:word_form]
-    new_obt_form = params[:obt_word_form]
+    new_form = params[:word_form].strip
+    new_obt_form = params[:obt_word_form].strip
 
     if @word.orig_string
       @word.orig_string = new_form
@@ -40,6 +40,8 @@ class WordsController < ApplicationController
 
     @sentence = Sentence.find(@word.sentence_id)
 
-    render(:partial => "sentences/word_details", :locals => {:wform => @word, :sent => @sentence})
+    render(:partial => "sentences/word_details",
+           :controller => :sentences,
+           :locals => {:wform => @word, :sent => @sentence})
   end
 end
