@@ -40,7 +40,7 @@
   <td colspan="5" align="left" >
       <div>
           <!-- Button for folding out add tag form div -->
-          <%= render(:partial => 'fold_out_button',
+          <%= render(:partial => 'shared/fold_out_button',
                      :locals => {:fold_out_elt_id => "add_tag_form_#{wform.id}",
                                  :button_id => "add_tag_button_#{wform.id}",
                                  :button_text => "Add tag"}) %>
@@ -75,7 +75,7 @@
         <td colspan="5" align="left">
             <div>
                 <!-- Button for folding out change word form div -->
-                <%= render(:partial => 'fold_out_button',
+                <%= render(:partial => 'shared/fold_out_button',
                            :locals => {:fold_out_elt_id => "change_word_form_form_#{wform.id}",
                                        :button_id => "change_word_button_#{wform.id}",
                                        :button_text => "Change word"}) %>
@@ -88,7 +88,7 @@
 
             <!-- If there are separate OBT word form create foldout form for changing it. -->
             <% if wform.orig_string %>
-                <%= render(:partial => 'fold_out_button',
+                <%= render(:partial => 'shared/fold_out_button',
                            :locals => {:fold_out_elt_id => "change_obt_word_form_span_#{wform.id}",
                                        :button_id => "change_obt_word_button_#{wform.id}"}) %>
 
