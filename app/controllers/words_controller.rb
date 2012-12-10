@@ -20,6 +20,16 @@ class WordsController < ApplicationController
     render(:partial => "sentences/word_details", :locals => {:wform => @word, :sent => @sentence})
   end
 
+  ##
+  # Renders the sentences/word_details partial the passed word id. Used to update views by ajax.
+  #
+  def word_details
+    @word = Word.find(params[:id])
+    @sentence = Sentence.find(@word.sentence_id)
+
+    render(:partial => "sentences/word_details", :locals => {:wform => @word, :sent => @sentence})
+  end
+
   def change_form
     @word = Word.find(params[:id])
     new_form = params[:word_form].strip
@@ -40,8 +50,6 @@ class WordsController < ApplicationController
 
     @sentence = Sentence.find(@word.sentence_id)
 
-    render(:partial => "sentences/word_details",
-           :controller => :sentences,
-           :locals => {:wform => @word, :sent => @sentence})
+    render(:partial => "sentences/word_details", :locals => {:wform => @word, :sent => @sentence})
   end
 end

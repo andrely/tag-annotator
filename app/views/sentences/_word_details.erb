@@ -45,7 +45,7 @@
                                  :button_id => "add_tag_button_#{wform.id}",
                                  :button_text => "Add tag"}) %>
       </div>
-    <div id=<%= "add_tag_form_#{wform.id}" -%> style='display:none'>
+    <div style='display:none' id=<%= "add_tag_form_#{wform.id}" -%>>
       Lemma:
       <%= text_field_tag("add_lemma_#{wform.id}", "", :onfocus => "removeShortcuts();",
                          :onblur => "addShortcuts();", :onclick => "removeShortcuts();",
@@ -80,7 +80,7 @@
                                        :button_id => "change_word_button_#{wform.id}",
                                        :button_text => "Change word"}) %>
             </div>
-            <div id=<%= "change_word_form_form_#{wform.id}" -%> style='display:none;'>
+            <div style='display:none;' id=<%= "change_word_form_form_#{wform.id}" -%>>
             New word:
             <%= text_field_tag("change_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
                                :onblur => "addShortcuts();", :onclick => "removeShortcuts();",
@@ -92,7 +92,7 @@
                            :locals => {:fold_out_elt_id => "change_obt_word_form_span_#{wform.id}",
                                        :button_id => "change_obt_word_button_#{wform.id}"}) %>
 
-                <span id=<%= "change_obt_word_form_span_#{wform.id}" -%> style='display:none;'>
+                <span style='display:none;' id=<%= "change_obt_word_form_span_#{wform.id}" -%>>
                 New OBT word:
                 <%= text_field_tag("change_obt_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
                                    :onblur => "addShortcuts();", :onclick => "removeShortcuts();",
@@ -102,12 +102,12 @@
             <% end %>
 
             <%= submit_tag("Change",
-                           :onclick => remote_function(:url => {:controller => :words,
+                           :onclick => (remote_function:url => {:controller => :words,
                                                                 :action => :change_form,
                                                                 :id => wform.id},
                                                        :with => "'word_form='+$('change_word_form_#{wform.id}').value+'&obt_word_form='+$('change_obt_word_form_#{wform.id}').value",
                                                        :update => "tag-#{w_idx}",
-                                                       :success => "updateWord(#{w_idx}, $('change_word_form_#{wform.id}').value);",
+                                                       :complete => "updateWordBrowser(#{wform.sentence_id}, #{w_idx})",
                                                        :failure => "showError('failed!');")) %>
             </div>
         </td>

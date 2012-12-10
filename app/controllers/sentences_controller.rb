@@ -54,4 +54,13 @@ class SentencesController < ApplicationController
       format.js
     end
   end
+
+  ##
+  # Renders the sentence/word_browser partial. Used for updating views with ajax calls.
+  #
+  def word_browser
+    @sentence = Sentence.find(params[:id])
+
+    render(:partial => 'word_browser', :locals => {:words => @sentence.words})
+  end
 end

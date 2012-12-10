@@ -1,0 +1,15 @@
+<!-- Generates the word browser in sentences/show. updateTag() javscript function must be called
+     to set initial status.
+
+     Local variables:
+     - Words to display: words -->
+<p>
+    <% words.each do |w| -%>
+        <% idx = w.sentence_index -%>
+
+        <span id='word-<%= idx %>' class='word' onclick='updateTag(<%= idx %>)'>
+        <%= w.printable_string %>
+      </span>
+
+    <% end -%>
+</p>

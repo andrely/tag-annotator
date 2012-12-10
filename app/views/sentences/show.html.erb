@@ -1,5 +1,7 @@
 <h1>Sentence <%= @sentence.text_index + 1 %> from "<%= @sentence.tagged_text.title %>"</h1>
 
+<%= javascript_tag "var AUTH_TOKEN = '#{form_authenticity_token}';" if protect_against_forgery? %>
+
 <script type="text/javascript">
     focus = 0
     length = <%= @sentence.length -%>
@@ -81,18 +83,26 @@
     function toggleOBTWordFormInput(id) {
         $('change_obt_word_form_' + id).disabled = !$('change_obt_word_form_' + id).disabled;
     }
+    /**
+     * Updates the content of the word browser with a given sentence.
+     *
+     * @param id Id for the sentence which should be displayed.
+     * @param index Word index to show as selected after update.
+     */
+    function updateWordBrowser(id, index) {
+        new Ajax.Updater('word_browser', '/sentences/word_browser/' + id,
+                {asynchronous:true, evalScripts:true,
+                 parameters: 'authenticity_token=' + AUTH_TOKEN,
+                 onComplete: function (r) { updateTag(index); },
+                 onFailure: function(r) { showError('failed to reload word browser');}});
+    }
 </script>
 
-<p>
-  <% @words.each do |w| -%>
-      <% idx = w.sentence_index -%>
-
-      <span id='word-<%= idx %>' class='word' onclick='updateTag(<%= idx %>)'>
-        <%= w.printable_string %>
-      </span>
-
-  <% end -%>
-</p>
+<!-- Renders the word browser -->
+<div id='word_browser'>
+    <%= render(:partial => 'word_browser',
+               :locals => {:words => @words}) %>
+</div>
 
 <p>
 
