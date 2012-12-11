@@ -3,13 +3,18 @@
 <%= javascript_tag "var AUTH_TOKEN = '#{form_authenticity_token}';" if protect_against_forgery? %>
 
 <script type="text/javascript">
-    focus = 0
-    length = <%= @sentence.length -%>
+    var focus = 0;
 
-            Event.observe(window, 'load', function() {
-                updateTag(focus);
-                addShortcuts();
-            });
+    /* guard variable in order to aviod adding/removiung shortcuts
+     * multiple times in Chrome on Windows.*/
+    var shortcutsEnabled = false;
+
+    length = <%= @sentence.length -%>;
+
+    Event.observe(window, 'load', function() {
+        updateTag(focus);
+        addShortcuts();
+    });
 
     function updateTag(index) {
         $$('span.word').each(function(e) { e.style.color = 'black' })
@@ -29,6 +34,10 @@
     }
 
     function addShortcuts() {
+        if (shortcutsEnabled) {
+            return;
+        }
+
         shortcut.add("space", function() {
             focus = focus + 1;
             if (focus >= length) { focus = 0; }
@@ -61,9 +70,15 @@
         shortcut.add("8", function() { toggleTag(7); }, {'disable_in_input': true });
         shortcut.add("9", function() { toggleTag(8); }, {'disable_in_input': true });
         shortcut.add("0", function() { toggleTag(9); }, {'disable_in_input': true });
+
+        shortcutsEnabled = true;
     }
 
     function removeShortcuts() {
+        if (!shortcutsEnabled) {
+            return;
+        }
+
         shortcut.remove("space");
         shortcut.remove(".");
         shortcut.remove("right");
@@ -78,6 +93,8 @@
         shortcut.remove("8");
         shortcut.remove("9");
         shortcut.remove("0");
+
+        shortcutsEnabled = false;
     }
 
     function toggleOBTWordFormInput(id) {

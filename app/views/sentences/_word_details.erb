@@ -48,12 +48,11 @@
     <div style='display:none' id=<%= "add_tag_form_#{wform.id}" -%>>
       Lemma:
       <%= text_field_tag("add_lemma_#{wform.id}", "", :onfocus => "removeShortcuts();",
-                         :onblur => "addShortcuts();", :onclick => "removeShortcuts();",
-                         :onkeydown => "removeShortcuts();") %>
+                         :onblur => "addShortcuts();") %>
       Tag:
       <%= text_field_with_auto_complete_with_id_checking(
                   :tag, :string, {:id => "add_tag_#{wform.id}", :onfocus => "removeShortcuts();",
-                  :onblur => "addShortcuts();", :onclick => "removeShortcuts();", :onkeydown => "removeShortcuts();"},
+                  :onblur => "addShortcuts();"},
                   {:url => {:controller => :tags, :action => "auto_complete_for_tag_string"},
                    :method => :get}) %>
       <%= submit_tag('Add', :onclick => remote_function(:url => {:controller => :words,
@@ -83,8 +82,7 @@
             <div style='display:none;' id=<%= "change_word_form_form_#{wform.id}" -%>>
             New word:
             <%= text_field_tag("change_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
-                               :onblur => "addShortcuts();", :onclick => "removeShortcuts();",
-                               :onkeydown => "removeShortcuts();") %>
+                               :onblur => "addShortcuts();") %>
 
             <!-- If there are separate OBT word form create foldout form for changing it. -->
             <% if wform.orig_string %>
@@ -95,8 +93,7 @@
                 <span style='display:none;' id=<%= "change_obt_word_form_span_#{wform.id}" -%>>
                 New OBT word:
                 <%= text_field_tag("change_obt_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
-                                   :onblur => "addShortcuts();", :onclick => "removeShortcuts();",
-                                   :onkeydown => "removeShortcuts();") %>
+                                   :onblur => "addShortcuts();") %>
 
                 </span>
             <% end %>
