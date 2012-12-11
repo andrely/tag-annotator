@@ -107,7 +107,7 @@
      * @param index Word index to show as selected after update.
      */
     function updateWordBrowser(id, index) {
-        new Ajax.Updater('word_browser', '/sentences/word_browser/' + id,
+        new Ajax.Updater('word_browser', 'sentences/word_browser/' + id,
                 {asynchronous:true, evalScripts:true,
                  parameters: 'authenticity_token=' + AUTH_TOKEN,
                  onComplete: function (r) { updateTag(index); },
