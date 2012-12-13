@@ -1,5 +1,5 @@
 class TaggedText < ActiveRecord::Base
-  has_many :sentences, :dependent => :destroy
+  has_many :sentences, :order => 'text_index', :dependent => :destroy
   has_many :bookmarks, :dependent => :destroy
 
   def words
