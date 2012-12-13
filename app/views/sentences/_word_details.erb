@@ -109,4 +109,48 @@
             </div>
         </td>
     </tr>
+
+    <!-- Fold out form for inserting a word -->
+    <tr>
+        <td colspan="5" align="left">
+            <div>
+                <!-- Button for folding out insert word form div -->
+                <%= render(:partial => 'shared/fold_out_button',
+                           :locals => {:fold_out_elt_id => "insert_word_form_#{wform.id}",
+                                       :button_id => "insert_word_button_#{wform.id}",
+                                       :button_text => "Insert word"}) %>
+            </div>
+
+            <div style='display:none;' id=<%= "insert_word_form_#{wform.id}" -%>>
+                New word:
+                <%= text_field_tag("insert_word_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                                   :onblur => "addShortcuts();") %>
+
+                <!-- If there are separate OBT word form create foldout form for changing it. -->
+                <% if wform.orig_string %>
+                    <%= render(:partial => 'shared/fold_out_button',
+                               :locals => {:fold_out_elt_id => "insert_obt_word_form_#{wform.id}",
+                                           :button_id => "insert_obt_word_button_#{wform.id}"}) %>
+
+                    <span style='display:none;' id=<%= "insert_obt_word_form_#{wform.id}" -%>>
+                New OBT word:
+                        <%= text_field_tag("insert_obt_word_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                                           :onblur => "addShortcuts();") %>
+
+                </span>
+                <% end %>
+
+
+
+                <%= submit_tag("Add",
+                               :onclick => (remote_function:url => {:controller => :sentences,
+                                                                    :action => :add_word,
+                                                                    :id => wform.sentence_id},
+                                                           :with => "'word_id='+ #{wform.id} +'&position=after&word_string='+$('insert_word_#{wform.id}').value+'&obt_word_string='+$('insert_obt_word_#{wform.id}').value",
+                                                           :update => "tag-#{w_idx}",
+                                                           :complete => "updateWordBrowser(#{wform.sentence_id}, #{w_idx})",
+                                                           :failure => "showError('failed!');")) %>
+            </div>
+        </td>
+    </tr>
 </table>

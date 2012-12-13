@@ -1,5 +1,5 @@
 class Sentence < ActiveRecord::Base
-  has_many :words, :dependent => :destroy
+  has_many :words, :order => 'sentence_index', :dependent => :destroy
   belongs_to :tagged_text
 
   accepts_nested_attributes_for :words, :allow_destroy => true
@@ -68,4 +68,23 @@ class Sentence < ActiveRecord::Base
   def count_ambigious_words()
     words.find_all { |w| w.ambigious? }.count
   end
+
+  def add_word(word_id, word_args, opts = {})
+    position = opts[:position].to_sym || :after
+
+    word = Word.find(word_id)
+    index = word.sentence_index
+    new_word = Word.new(word_args)
+
+    if position == :before
+      index -= 1
+    end
+
+    words.insert(index, new_word)
+
+    words.each_with_index {|w, i| w.sentence_index = i}
+
+    return self
+  end
+
 end

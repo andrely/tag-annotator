@@ -63,4 +63,23 @@ class SentencesController < ApplicationController
 
     render(:partial => 'word_browser', :locals => {:words => @sentence.words})
   end
+
+  def add_word
+    @sentence = Sentence.find(params[:id])
+    @word_id = params[:word_id]
+    @position = params[:position]
+    @word_string = params[:word_string].strip
+    @obt_word_string = params[:obt_word_string].strip
+
+    if @obt_word_string.empty?
+      @obt_word_string = @word_string.downcase
+    end
+
+    @sentence.add_word(@word_id, {:orig_string => @word_string, :string => @word_obt_tring},
+                       :position => @position)
+
+    @sentence.save
+
+    render(:partial => 'word_details', :locals => {:wform => Word.find(@word_id), :sent => @sentence})
+  end
 end
