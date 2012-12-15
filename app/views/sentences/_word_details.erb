@@ -32,6 +32,8 @@
     <% t_idx += 1 -%>
 <% end -%>
 
+<!-- TODO place these forms outside of the tag table-->
+
 <!--
     Fold out form for adding new tag/lemma
 -->
@@ -111,6 +113,9 @@
     </tr>
 
     <!-- Fold out form for inserting a word -->
+
+    <!-- TODO keep focus on the current word after insertion or deletion -->
+
     <tr>
         <td colspan="5" align="left">
             <div>
@@ -122,9 +127,15 @@
             </div>
 
             <div style='display:none;' id=<%= "insert_word_form_#{wform.id}" -%>>
+                <% form_tag(:controller => :sentences,
+                            :action => :add_word,
+                            :id => wform.sentence_id) do -%>
+
                 New word:
-                <%= text_field_tag("insert_word_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                <%= text_field_tag(:word_string, "", :onfocus => "removeShortcuts();",
                                    :onblur => "addShortcuts();") %>
+
+                <%= select_tag(:position, options_for_select(["after", "before"])) %>
 
                 <!-- If there are separate OBT word form create foldout form for changing it. -->
                 <% if wform.orig_string %>
@@ -134,23 +145,30 @@
 
                     <span style='display:none;' id=<%= "insert_obt_word_form_#{wform.id}" -%>>
                 New OBT word:
-                        <%= text_field_tag("insert_obt_word_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                        <%= text_field_tag(:obt_word_string, "", :onfocus => "removeShortcuts();",
                                            :onblur => "addShortcuts();") %>
 
                 </span>
                 <% end %>
 
+                <%= hidden_field_tag(:word_id, wform.id) %>
 
+                <%= submit_tag("Add") %>
 
-                <%= submit_tag("Add",
-                               :onclick => (remote_function:url => {:controller => :sentences,
-                                                                    :action => :add_word,
-                                                                    :id => wform.sentence_id},
-                                                           :with => "'word_id='+ #{wform.id} +'&position=after&word_string='+$('insert_word_#{wform.id}').value+'&obt_word_string='+$('insert_obt_word_#{wform.id}').value",
-                                                           :update => "tag-#{w_idx}",
-                                                           :complete => "updateWordBrowser(#{wform.sentence_id}, #{w_idx})",
-                                                           :failure => "showError('failed!');")) %>
+                <% end %>
             </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="5" align="left">
+            <% form_tag(:controller => sentences_path, :action => :delete_word, :id => wform.sentence_id) do -%>
+
+                <%=  hidden_field_tag(:word_id, wform.id) %>
+
+                <%=  submit_tag("Delete word", :confirm => "Are you sure?") %>
+
+            <% end %>
         </td>
     </tr>
 </table>

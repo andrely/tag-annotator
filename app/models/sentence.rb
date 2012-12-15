@@ -69,22 +69,55 @@ class Sentence < ActiveRecord::Base
     words.find_all { |w| w.ambigious? }.count
   end
 
+  ##
+  # Adds a word to the sentence instance populated with word_args before or after the word specified
+  # by the word_id. :position key specifies :before or :after (:after is the default).
+  #
   def add_word(word_id, word_args, opts = {})
-    position = opts[:position].to_sym || :after
+    position = (opts[:position] || :after).to_sym
 
     word = Word.find(word_id)
     index = word.sentence_index
-    new_word = Word.new(word_args)
 
-    if position == :before
-      index -= 1
+    if not word == words[index]
+      raise ArgumentError
     end
 
-    words.insert(index, new_word)
+    new_word = Word.new(word_args)
 
-    words.each_with_index {|w, i| w.sentence_index = i}
+    if position == :after
+      index += 1
+    end
+
+    # increment index of words after insertion
+    new_word.sentence_index = index
+    words[index..-1].each {|w| w.sentence_index += 1}
+
+    # add word
+    words << new_word
+
+    # sort the words in the current instance
+    words.sort_by {|x| x.sentence_index}
 
     return self
   end
 
+  ##
+  # Removes the word identified by the word_id from the sentence instance.
+  #
+  def delete_word(word_id)
+    word = Word.find(word_id)
+    index = word.sentence_index
+
+    if not word == words[index]
+      raise ArgumentError
+    end
+
+    self.words.delete(word)
+
+    # reset indices to remove any gap
+    words.each_with_index {|w, i| w.sentence_index = i}
+
+    return self
+  end
 end

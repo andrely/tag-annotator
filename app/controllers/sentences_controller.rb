@@ -64,6 +64,14 @@ class SentencesController < ApplicationController
     render(:partial => 'word_browser', :locals => {:words => @sentence.words})
   end
 
+  ##
+  # Adds a word to the sentence in relation to the word with the word id passed.
+  # The position parameter can be 'before' or 'after' and specifies where the new
+  # word is added in relation to the passed word id.
+  #
+  # The added word is initialized with string and orig_string fields from the passed
+  # word_string and obt_word_string parameters.
+  #
   def add_word
     @sentence = Sentence.find(params[:id])
     @word_id = params[:word_id]
@@ -75,11 +83,25 @@ class SentencesController < ApplicationController
       @obt_word_string = @word_string.downcase
     end
 
-    @sentence.add_word(@word_id, {:orig_string => @word_string, :string => @word_obt_tring},
+    @sentence.add_word(@word_id, {:orig_string => @word_string, :string => @obt_word_string},
                        :position => @position)
 
     @sentence.save
 
-    render(:partial => 'word_details', :locals => {:wform => Word.find(@word_id), :sent => @sentence})
+    redirect_to :controller =>  :sentences, :action => :show, :id => @sentence.id
+  end
+
+  ##
+  # Deletes the word in the sentence indentified by the parameter word_id
+  #
+  def delete_word
+    @sentence = Sentence.find(params[:id])
+    @word_id = params[:word_id]
+
+    @sentence.delete_word(@word_id)
+
+    @sentence.save
+
+    redirect_to :controller =>  :sentences, :action => :show, :id => @sentence.id
   end
 end
