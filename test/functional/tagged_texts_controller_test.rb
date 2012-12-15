@@ -12,18 +12,18 @@ class TaggedTextsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create tagged_text" do
-    assert_difference('TaggedText.count') do
-      post :create, :tagged_text => { }
-    end
+  #test "should create tagged_text" do
+  #  assert_difference('TaggedText.count') do
+  #    post :create, :tagged_text => { }
+  #  end
+  #
+  #  assert_redirected_to tagged_text_path(assigns(:tagged_text))
+  #end
 
-    assert_redirected_to tagged_text_path(assigns(:tagged_text))
-  end
-
-  test "should show tagged_text" do
-    get :show, :id => tagged_texts(:one).id
-    assert_response :success
-  end
+  #test "should show tagged_text" do
+  #  get :show, :id => tagged_texts(:one).id
+  #  assert_response :success
+  #end
 
   test "should get edit" do
     get :edit, :id => tagged_texts(:one).id
