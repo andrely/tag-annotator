@@ -38,7 +38,9 @@ class WordsController < ApplicationController
     if @word.orig_string
       @word.orig_string = new_form
       if new_obt_form.empty?
-        @word.string = new_form.downcase
+        # if there was an xml form in the original word and a separate OBT form is not passed,
+        # create the OBT form from the passed word form.
+        @word.string = obt_downcase(new_form)
       else
         @word.string = new_obt_form
       end

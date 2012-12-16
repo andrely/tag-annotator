@@ -13,4 +13,12 @@ module ApplicationHelper
                             { :url => { :action =>
                                             "auto_complete_for_#{object}_#{method}" } }.update(completion_options))
   end
+
+  ##
+  # Mimic downcasing as done by OBT multitagger, ie. downcase only first letter.
+  # See issue #12
+  #
+  def obt_downcase(str)
+    str = str[0...1].downcase + str[1..-1]
+  end
 end
