@@ -19,7 +19,7 @@
 
 <%= link_to(initial_state ? "+" : "-", "#",
             :id => button_id,
-            :onmousedown => "toggleEltFromButton(#{fold_out_elt_id}, #{button_id});",
+            :onclick => "toggleEltFromButton(#{fold_out_elt_id}, #{button_id});",
             :style => "text-decoration:none") %>
 
 <%= button_text %>

@@ -71,6 +71,11 @@
         shortcut.add("9", function() { toggleTag(8); }, {'disable_in_input': true });
         shortcut.add("0", function() { toggleTag(9); }, {'disable_in_input': true });
 
+        shortcut.add("F1", function() { $('add_tag_button_' + focus).click();}, {'disable_in_input': true});
+        shortcut.add("F2", function() { $('change_word_button_' + focus).click();}, {'disable_in_input': true});
+        shortcut.add("F3", function() { $('insert_word_button_' + focus).click();}, {'disable_in_input': true});
+        shortcut.add("F4", function() { $('add_tag_button_' + focus).click();}, {'disable_in_input': true});
+
         shortcutsEnabled = true;
     }
 
@@ -93,6 +98,11 @@
         shortcut.remove("8");
         shortcut.remove("9");
         shortcut.remove("0");
+
+        shortcut.remove("F1");
+        shortcut.remove("F2");
+        shortcut.remove("F3");
+        shortcut.remove("F4");
 
         shortcutsEnabled = false;
     }
@@ -157,9 +167,10 @@
   <ul>
     <li><b>Space:</b> Selects the next word in the sentence.</li>
     <li><b>. (period):</b> Selects the previous word in this sentence.</li>
-    <li><b>&rarr;:</b> Proceed to the next sentence in the corpus.</li>
-    <li><b>&larr;:</b> Return to the previous sentence in the corpus.</li>
+    <li><b>&rarr;:</b> Proceed to the next sentence in the text.</li>
+    <li><b>&larr;:</b> Return to the previous sentence in the text.</li>
     <li><b>0-9:</b> Toggle the correct checkbox on the ten first tags (0 toggles the tenth tag).</li>
+    <li><b>F1-F3:</b> Show/hide the add tag, change word and insert word input forms.</li>
   </ul>
   <p>
     The <b>Bookmark</b> link adds a bookmark for this sentence that can be accessed though the bookmarks link in

@@ -44,7 +44,7 @@
           <!-- Button for folding out add tag form div -->
           <%= render(:partial => 'shared/fold_out_button',
                      :locals => {:fold_out_elt_id => "add_tag_form_#{wform.id}",
-                                 :button_id => "add_tag_button_#{wform.id}",
+                                 :button_id => "add_tag_button_#{wform.sentence_index}",
                                  :button_text => "Add tag"}) %>
       </div>
     <div style='display:none' id=<%= "add_tag_form_#{wform.id}" -%>>
@@ -78,7 +78,7 @@
                 <!-- Button for folding out change word form div -->
                 <%= render(:partial => 'shared/fold_out_button',
                            :locals => {:fold_out_elt_id => "change_word_form_form_#{wform.id}",
-                                       :button_id => "change_word_button_#{wform.id}",
+                                       :button_id => "change_word_button_#{wform.sentence_index}",
                                        :button_text => "Change word"}) %>
             </div>
             <div style='display:none;' id=<%= "change_word_form_form_#{wform.id}" -%>>
@@ -122,7 +122,7 @@
                 <!-- Button for folding out insert word form div -->
                 <%= render(:partial => 'shared/fold_out_button',
                            :locals => {:fold_out_elt_id => "insert_word_form_#{wform.id}",
-                                       :button_id => "insert_word_button_#{wform.id}",
+                                       :button_id => "insert_word_button_#{wform.sentence_index}",
                                        :button_text => "Insert word"}) %>
             </div>
 
