@@ -162,7 +162,7 @@
 
     <tr>
         <td colspan="5" align="left">
-            <% form_tag(:controller => sentences_path, :action => :delete_word, :id => wform.sentence_id) do -%>
+            <% form_tag(:controller => :sentences, :action => :delete_word, :id => wform.sentence_id) do -%>
 
                 <%=  hidden_field_tag(:word_id, wform.id) %>
 
