@@ -1,4 +1,6 @@
 class WordsController < ApplicationController
+  include ApplicationHelper
+  
   def add_tag
     @word = Word.find(params[:id])
 
