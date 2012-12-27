@@ -76,8 +76,8 @@ class SentencesController < ApplicationController
     @sentence = Sentence.find(params[:id])
     @word_id = params[:word_id]
     @position = params[:position]
-    @word_string = params[:word_string].strip
-    @obt_word_string = params[:obt_word_string].strip
+    @word_string = (params[:word_string] || "").strip
+    @obt_word_string = (params[:obt_word_string] || "").strip
 
     # redirect with error if the passed word string is empty
     if @word_string.empty?

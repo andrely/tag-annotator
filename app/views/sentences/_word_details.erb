@@ -1,4 +1,5 @@
 <!-- TODO display AJAX error in flash field -->
+<!-- TODo sentence context is not updated when words are changed or added/deleted -->
 
 <% w_idx = wform.sentence_index -%>
 <table>
@@ -62,7 +63,7 @@
       <%= submit_tag('Add', :onclick => remote_function(:url => {:controller => :words,
                                                                  :action => :add_tag,
                                                                  :id => wform.id},
-                                                        :with => "'lemma='+$('add_lemma_#{wform.id}').value+'&tag='+$('add_tag_#{wform.id}').value",
+                                                        :with => "'lemma='+'\"'+encodeURIComponent($('add_lemma_#{wform.id}').value)+'\"'+'&tag='+'\"'+encodeURIComponent($('add_tag_#{wform.id}').value)+'\"'",
                                                         :update => "tag-#{w_idx}",
                                                         :success => "updateTag(#{w_idx});",
                                                         :failure => "showError('Add tag failed!');")) %>
@@ -106,7 +107,7 @@
                            :onclick => (remote_function:url => {:controller => :words,
                                                                 :action => :change_form,
                                                                 :id => wform.id},
-                                                       :with => "'word_form='+$('change_word_form_#{wform.id}').value+'&obt_word_form='+$('change_obt_word_form_#{wform.id}').value",
+                                                       :with => "'word_form='+'\"'+encodeURIComponent($('change_word_form_#{wform.id}').value)+'\"'+'&obt_word_form='+'\"'+encodeURIComponent($('change_obt_word_form_#{wform.id}').value)+'\"'",
                                                        :update => "tag-#{w_idx}",
                                                        :complete => "updateWordBrowser(#{wform.sentence_id}, #{w_idx})",
                                                        :failure => "showError('Change word failed!');")) %>

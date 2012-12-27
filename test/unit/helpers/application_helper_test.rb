@@ -17,7 +17,15 @@ class ApplicationHelperTest < Test::Unit::TestCase
   end
 
   # Fake test
-  def test_fail
+  def test_obt_downcase
     assert_equal("uNESCO", obt_downcase("UNESCO"))
+  end
+
+  def test_strip_quotes
+    assert_equal('ba', strip_quotes('ba'))
+    assert_equal('"ba', strip_quotes('"ba'))
+    assert_equal('ba"', strip_quotes('ba"'))
+    assert_equal('ba', strip_quotes('"ba"'))
+    assert_equal('"', strip_quotes('"'))
   end
 end

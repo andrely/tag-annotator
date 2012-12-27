@@ -21,4 +21,15 @@ module ApplicationHelper
   def obt_downcase(str)
     str = str[0...1].downcase + str[1..-1]
   end
+
+  ##
+  # Strips enclosing quotes from string
+  #
+  def strip_quotes(str)
+    if str[0] == 34 and str[-1] == 34 and str.size > 1
+      str = str[1..-2]
+    end
+
+    str
+  end
 end

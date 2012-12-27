@@ -1,11 +1,12 @@
 class WordsController < ApplicationController
   include ApplicationHelper
-  
+
   def add_tag
     @word = Word.find(params[:id])
 
-    lemma = params[:lemma].strip
-    tag_string = params[:tag].strip
+    # parameters are quoted to ensure proper encoding with javascript encodeURIComponent
+    lemma = strip_quotes(params[:lemma] || "").strip
+    tag_string = strip_quotes(params[:tag] || "").strip
 
     # return rendered partial and error code if the tag or lemma passed is empty
     if lemma.empty? or tag_string.empty?
@@ -41,11 +42,13 @@ class WordsController < ApplicationController
 
   def change_form
     @word = Word.find(params[:id])
-    new_form = params[:word_form].strip
-    new_obt_form = params[:obt_word_form].strip
+
+    # parameters are quoted to ensure proper encoding with javascript encodeURIComponent
+    new_form = strip_quotes((params[:word_form] || "")).strip
+    new_obt_form = strip_quotes((params[:obt_word_form] || "")).strip
 
     # return rendered partial and error code if the word form passed is empty
-    if new_form.empty?
+    if new_form.strip.empty?
       @sentence = Sentence.find(@word.sentence_id)
       return render(:partial => "sentences/word_details", :status => 400,
                     :locals => {:wform => @word, :sent => @sentence})
