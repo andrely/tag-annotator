@@ -79,6 +79,12 @@ class SentencesController < ApplicationController
     @word_string = params[:word_string].strip
     @obt_word_string = params[:obt_word_string].strip
 
+    # redirect with error if the passed word string is empty
+    if @word_string.empty?
+      flash[:error] = "Couldn't add empty word"
+      return redirect_to :controller =>  :sentences, :action => :show, :id => @sentence.id
+    end
+
     if @obt_word_string.empty?
       @obt_word_string = @word_string.downcase
     end

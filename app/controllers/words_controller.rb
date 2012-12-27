@@ -2,8 +2,15 @@ class WordsController < ApplicationController
   def add_tag
     @word = Word.find(params[:id])
 
-    lemma = params[:lemma]
-    tag_string = params[:tag]
+    lemma = params[:lemma].strip
+    tag_string = params[:tag].strip
+
+    # return rendered partial and error code if the tag or lemma passed is empty
+    if lemma.empty? or tag_string.empty?
+      @sentence = Sentence.find(@word.sentence_id)
+      return render(:partial => "sentences/word_details", :locals => {:wform => @word, :sent => @sentence},
+                    :status => 400)
+    end
 
     tag = Tag.new
     tag.lemma = lemma
@@ -34,6 +41,13 @@ class WordsController < ApplicationController
     @word = Word.find(params[:id])
     new_form = params[:word_form].strip
     new_obt_form = params[:obt_word_form].strip
+
+    # return rendered partial and error code if the word form passed is empty
+    if new_form.empty?
+      @sentence = Sentence.find(@word.sentence_id)
+      return render(:partial => "sentences/word_details", :status => 400,
+                    :locals => {:wform => @word, :sent => @sentence})
+    end
 
     if @word.orig_string
       @word.orig_string = new_form

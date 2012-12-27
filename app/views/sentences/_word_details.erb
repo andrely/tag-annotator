@@ -1,3 +1,5 @@
+<!-- TODO display AJAX error in flash field -->
+
 <% w_idx = wform.sentence_index -%>
 <table>
 <tr><th colspan='5' align='left'><%= sent.context_html_string(w_idx) %></th></tr>
@@ -61,9 +63,9 @@
                                                                  :action => :add_tag,
                                                                  :id => wform.id},
                                                         :with => "'lemma='+$('add_lemma_#{wform.id}').value+'&tag='+$('add_tag_#{wform.id}').value",
-                                                        :update => "tag-#{w_idx}"),
-                     :success => "updateTag(#{w_idx});",
-                     :failure => "showError('failed!');") %>
+                                                        :update => "tag-#{w_idx}",
+                                                        :success => "updateTag(#{w_idx});",
+                                                        :failure => "showError('Add tag failed!');")) %>
     </div>
   </td>
 </tr>
@@ -107,7 +109,7 @@
                                                        :with => "'word_form='+$('change_word_form_#{wform.id}').value+'&obt_word_form='+$('change_obt_word_form_#{wform.id}').value",
                                                        :update => "tag-#{w_idx}",
                                                        :complete => "updateWordBrowser(#{wform.sentence_id}, #{w_idx})",
-                                                       :failure => "showError('failed!');")) %>
+                                                       :failure => "showError('Change word failed!');")) %>
             </div>
         </td>
     </tr>
