@@ -74,7 +74,6 @@
         shortcut.add("F1", function() { $('add_tag_button_' + focus).click();}, {'disable_in_input': true});
         shortcut.add("F2", function() { $('change_word_button_' + focus).click();}, {'disable_in_input': true});
         shortcut.add("F3", function() { $('insert_word_button_' + focus).click();}, {'disable_in_input': true});
-        shortcut.add("F4", function() { $('add_tag_button_' + focus).click();}, {'disable_in_input': true});
 
         shortcutsEnabled = true;
     }
@@ -102,7 +101,6 @@
         shortcut.remove("F1");
         shortcut.remove("F2");
         shortcut.remove("F3");
-        shortcut.remove("F4");
 
         shortcutsEnabled = false;
     }

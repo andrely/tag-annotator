@@ -3,175 +3,169 @@
 
 <% w_idx = wform.sentence_index -%>
 <table>
-<tr><th colspan='5' align='left'><%= sent.context_html_string(w_idx) %></th></tr>
-<% if wform.orig_string %>
-        <tr><td colspan='5' align='left'>OBT word form: <%= wform.string %></td></tr>
-<% end %>
-<% t_idx = 1 -%>
-<% wform.tags.each do |tform| -%>
-
-    <tr id="<%= "row_#{w_idx}_#{t_idx}" -%>">
-      <td><%= if t_idx < 10 then t_idx elsif t_idx == 10 then 0 end %></td>
-      <td>
-        <%= check_box_tag("tag_#{w_idx}_#{t_idx}", "tag_#{w_idx}_#{t_idx}", tform.correct?,
-                          { :onclick => remote_function(:url => {:controller => :tags,
-                                                                 :action => :toggle,
-                                                                 :id => tform.id},
-                                                        :with => "'status='+!$('tag_#{w_idx}_#{t_idx}').checked + '&nocache=' + new Date().getTime()",
-                                                        :method => :get,
-                                                        :before => "Field.disable('tag_#{w_idx}_#{t_idx}')",
-                                                        :after => "Field.enable('tag_#{w_idx}_#{t_idx}')",
-                                                        :success => "tagToggleSuccessHandler(request, 'tag_#{w_idx}_#{t_idx}', 'row_#{w_idx}_#{t_idx}');",
-                                                        :failure => "tagToggleFailureHandler(request, 'tag_#{w_idx}_#{t_idx}');")}) %>
-      </td>
-      <td><%= h(tform.lemma) %></td>
-      <td><%= h(tform.string) %></td>
-      <td>
-        <%= link_to_remote("del", :update => "tag-#{w_idx}",
-                                  :url => {:controller => :tags, :action => :delete, :id => tform.id},
-                                  :failure => "showError('failed!')") %>
-      </td>
+    <tr>
+        <th colspan='5' align='left'><%= sent.context_html_string(w_idx) %></th>
     </tr>
-    <% t_idx += 1 -%>
-<% end -%>
+    <% if wform.orig_string %>
+        <tr>
+            <td colspan='5' align='left'>OBT word form: <%= wform.string %></td>
+        </tr>
+    <% end %>
+    <% t_idx = 1 -%>
+    <% wform.tags.each do |tform| -%>
 
-<!-- TODO place these forms outside of the tag table-->
+        <tr id="<%= "row_#{w_idx}_#{t_idx}" -%>">
+            <td><%= if t_idx < 10 then
+                      t_idx
+                    elsif t_idx == 10 then
+                      0
+                    end %></td>
+            <td>
+                <%= check_box_tag("tag_#{w_idx}_#{t_idx}", "tag_#{w_idx}_#{t_idx}", tform.correct?,
+                                  {:onclick => remote_function(:url => {:controller => :tags,
+                                                                        :action => :toggle,
+                                                                        :id => tform.id},
+                                                               :with => "'status='+!$('tag_#{w_idx}_#{t_idx}').checked + '&nocache=' + new Date().getTime()",
+                                                               :method => :get,
+                                                               :before => "Field.disable('tag_#{w_idx}_#{t_idx}')",
+                                                               :after => "Field.enable('tag_#{w_idx}_#{t_idx}')",
+                                                               :success => "tagToggleSuccessHandler(request, 'tag_#{w_idx}_#{t_idx}', 'row_#{w_idx}_#{t_idx}');",
+                                                               :failure => "tagToggleFailureHandler(request, 'tag_#{w_idx}_#{t_idx}');")}) %>
+            </td>
+            <td><%= h(tform.lemma) %></td>
+            <td><%= h(tform.string) %></td>
+            <td>
+                <%= link_to_remote("del", :update => "tag-#{w_idx}",
+                                   :url => {:controller => :tags, :action => :delete, :id => tform.id},
+                                   :failure => "showError('failed!')") %>
+            </td>
+        </tr>
+        <% t_idx += 1 -%>
+    <% end -%>
+
+</table>
 
 <!--
     Fold out form for adding new tag/lemma
 -->
 
-<tr>
-  <td colspan="5" align="left" >
-      <div>
-          <!-- Button for folding out add tag form div -->
-          <%= render(:partial => 'shared/fold_out_button',
-                     :locals => {:fold_out_elt_id => "add_tag_form_#{wform.id}",
-                                 :button_id => "add_tag_button_#{wform.sentence_index}",
-                                 :button_text => "Add tag"}) %>
-      </div>
-    <div style='display:none' id=<%= "add_tag_form_#{wform.id}" -%>>
-      Lemma:
-      <%= text_field_tag("add_lemma_#{wform.id}", "", :onfocus => "removeShortcuts();",
-                         :onblur => "addShortcuts();") %>
-      Tag:
-      <%= text_field_with_auto_complete_with_id_checking(
-                  :tag, :string, {:id => "add_tag_#{wform.id}", :onfocus => "removeShortcuts();",
-                  :onblur => "addShortcuts();"},
-                  {:url => {:controller => :tags, :action => "auto_complete_for_tag_string"},
-                   :method => :get}) %>
-      <%= submit_tag('Add', :onclick => remote_function(:url => {:controller => :words,
-                                                                 :action => :add_tag,
-                                                                 :id => wform.id},
-                                                        :with => "'lemma='+'\"'+encodeURIComponent($('add_lemma_#{wform.id}').value)+'\"'+'&tag='+'\"'+encodeURIComponent($('add_tag_#{wform.id}').value)+'\"'",
-                                                        :update => "tag-#{w_idx}",
-                                                        :success => "updateTag(#{w_idx});",
-                                                        :failure => "showError('Add tag failed!');")) %>
+<div>
+    <div>
+        <!-- Button for folding out add tag form div -->
+        <%= render(:partial => 'shared/fold_out_button',
+                   :locals => {:fold_out_elt_id => "add_tag_form_#{wform.id}",
+                               :button_id => "add_tag_button_#{wform.sentence_index}",
+                               :button_text => "Add tag"}) %>
     </div>
-  </td>
-</tr>
+    <div style='display:none' id=<%= "add_tag_form_#{wform.id}" -%>>
+        Lemma:
+        <%= text_field_tag("add_lemma_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                           :onblur => "addShortcuts();") %>
+        Tag:
+        <%= text_field_with_auto_complete_with_id_checking(
+                    :tag, :string, {:id => "add_tag_#{wform.id}", :onfocus => "removeShortcuts();",
+                                    :onblur => "addShortcuts();"},
+                    {:url => {:controller => :tags, :action => "auto_complete_for_tag_string"},
+                     :method => :get}) %>
+        <%= submit_tag('Add', :onclick => remote_function(:url => {:controller => :words,
+                                                                   :action => :add_tag,
+                                                                   :id => wform.id},
+                                                          :with => "'lemma='+'\"'+encodeURIComponent($('add_lemma_#{wform.id}').value)+'\"'+'&tag='+'\"'+encodeURIComponent($('add_tag_#{wform.id}').value)+'\"'",
+                                                          :update => "tag-#{w_idx}",
+                                                          :success => "updateTag(#{w_idx});",
+                                                          :failure => "showError('Add tag failed!');")) %>
+    </div>
+</div
 
-    <!--
+<!--
         Fold out form for changing word form
     -->
 
-    <tr>
-        <td colspan="5" align="left">
-            <div>
-                <!-- Button for folding out change word form div -->
-                <%= render(:partial => 'shared/fold_out_button',
-                           :locals => {:fold_out_elt_id => "change_word_form_form_#{wform.id}",
-                                       :button_id => "change_word_button_#{wform.sentence_index}",
-                                       :button_text => "Change word"}) %>
-            </div>
-            <div style='display:none;' id=<%= "change_word_form_form_#{wform.id}" -%>>
-            New word:
-            <%= text_field_tag("change_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
+<div>
+    <!-- Button for folding out change word form div -->
+    <%= render(:partial => 'shared/fold_out_button',
+               :locals => {:fold_out_elt_id => "change_word_form_form_#{wform.id}",
+                           :button_id => "change_word_button_#{wform.sentence_index}",
+                           :button_text => "Change word"}) %>
+</div>
+<div style='display:none;' id=<%= "change_word_form_form_#{wform.id}" -%>>
+    New word:
+    <%= text_field_tag("change_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                       :onblur => "addShortcuts();") %>
+
+    <!-- If there are separate OBT word form create foldout form for changing it. -->
+    <% if wform.orig_string %>
+        <%= render(:partial => 'shared/fold_out_button',
+                   :locals => {:fold_out_elt_id => "change_obt_word_form_span_#{wform.id}",
+                               :button_id => "change_obt_word_button_#{wform.id}"}) %>
+
+        <span style='display:none;' id=<%= "change_obt_word_form_span_#{wform.id}" -%>>
+                New OBT word:
+            <%= text_field_tag("change_obt_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
                                :onblur => "addShortcuts();") %>
 
-            <!-- If there are separate OBT word form create foldout form for changing it. -->
-            <% if wform.orig_string %>
-                <%= render(:partial => 'shared/fold_out_button',
-                           :locals => {:fold_out_elt_id => "change_obt_word_form_span_#{wform.id}",
-                                       :button_id => "change_obt_word_button_#{wform.id}"}) %>
+                </span>
+    <% end %>
 
-                <span style='display:none;' id=<%= "change_obt_word_form_span_#{wform.id}" -%>>
+    <%= submit_tag("Change",
+                   :onclick => (remote_function :url => {:controller => :words,
+                                                         :action => :change_form,
+                                                         :id => wform.id},
+                                                :with => "'word_form='+'\"'+encodeURIComponent($('change_word_form_#{wform.id}').value)+'\"'+'&obt_word_form='+'\"'+encodeURIComponent($('change_obt_word_form_#{wform.id}').value)+'\"'",
+                                                :update => "tag-#{w_idx}",
+                                                :complete => "updateWordBrowser(#{wform.sentence_id}, #{w_idx})",
+                                                :failure => "showError('Change word failed!');")) %>
+</div>
+
+<!-- Fold out form for inserting a word -->
+
+<!-- TODO keep focus on the current word after insertion or deletion -->
+
+<div>
+    <!-- Button for folding out insert word form div -->
+    <%= render(:partial => 'shared/fold_out_button',
+               :locals => {:fold_out_elt_id => "insert_word_form_#{wform.id}",
+                           :button_id => "insert_word_button_#{wform.sentence_index}",
+                           :button_text => "Insert word"}) %>
+</div>
+
+<div style='display:none;' id=<%= "insert_word_form_#{wform.id}" -%>>
+    <% form_tag(:controller => :sentences,
+                :action => :add_word,
+                :id => wform.sentence_id) do -%>
+
+        New word:
+        <%= text_field_tag(:word_string, "", :onfocus => "removeShortcuts();",
+                           :onblur => "addShortcuts();") %>
+
+        <%= select_tag(:position, options_for_select(["after", "before"])) %>
+
+        <!-- If there are separate OBT word form create foldout form for changing it. -->
+        <% if wform.orig_string %>
+            <%= render(:partial => 'shared/fold_out_button',
+                       :locals => {:fold_out_elt_id => "insert_obt_word_form_#{wform.id}",
+                                   :button_id => "insert_obt_word_button_#{wform.id}"}) %>
+
+            <span style='display:none;' id=<%= "insert_obt_word_form_#{wform.id}" -%>>
                 New OBT word:
-                <%= text_field_tag("change_obt_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                <%= text_field_tag(:obt_word_string, "", :onfocus => "removeShortcuts();",
                                    :onblur => "addShortcuts();") %>
 
                 </span>
-            <% end %>
+        <% end %>
 
-            <%= submit_tag("Change",
-                           :onclick => (remote_function:url => {:controller => :words,
-                                                                :action => :change_form,
-                                                                :id => wform.id},
-                                                       :with => "'word_form='+'\"'+encodeURIComponent($('change_word_form_#{wform.id}').value)+'\"'+'&obt_word_form='+'\"'+encodeURIComponent($('change_obt_word_form_#{wform.id}').value)+'\"'",
-                                                       :update => "tag-#{w_idx}",
-                                                       :complete => "updateWordBrowser(#{wform.sentence_id}, #{w_idx})",
-                                                       :failure => "showError('Change word failed!');")) %>
-            </div>
-        </td>
-    </tr>
+        <%= hidden_field_tag(:word_id, wform.id) %>
 
-    <!-- Fold out form for inserting a word -->
+        <%= submit_tag("Add") %>
 
-    <!-- TODO keep focus on the current word after insertion or deletion -->
+    <% end %>
+</div>
+<div>
+    <% form_tag(:controller => :sentences, :action => :delete_word, :id => wform.sentence_id) do -%>
 
-    <tr>
-        <td colspan="5" align="left">
-            <div>
-                <!-- Button for folding out insert word form div -->
-                <%= render(:partial => 'shared/fold_out_button',
-                           :locals => {:fold_out_elt_id => "insert_word_form_#{wform.id}",
-                                       :button_id => "insert_word_button_#{wform.sentence_index}",
-                                       :button_text => "Insert word"}) %>
-            </div>
+        <%= hidden_field_tag(:word_id, wform.id) %>
 
-            <div style='display:none;' id=<%= "insert_word_form_#{wform.id}" -%>>
-                <% form_tag(:controller => :sentences,
-                            :action => :add_word,
-                            :id => wform.sentence_id) do -%>
+        <%= submit_tag("Delete word", :confirm => "Are you sure?") %>
 
-                New word:
-                <%= text_field_tag(:word_string, "", :onfocus => "removeShortcuts();",
-                                   :onblur => "addShortcuts();") %>
-
-                <%= select_tag(:position, options_for_select(["after", "before"])) %>
-
-                <!-- If there are separate OBT word form create foldout form for changing it. -->
-                <% if wform.orig_string %>
-                    <%= render(:partial => 'shared/fold_out_button',
-                               :locals => {:fold_out_elt_id => "insert_obt_word_form_#{wform.id}",
-                                           :button_id => "insert_obt_word_button_#{wform.id}"}) %>
-
-                    <span style='display:none;' id=<%= "insert_obt_word_form_#{wform.id}" -%>>
-                New OBT word:
-                        <%= text_field_tag(:obt_word_string, "", :onfocus => "removeShortcuts();",
-                                           :onblur => "addShortcuts();") %>
-
-                </span>
-                <% end %>
-
-                <%= hidden_field_tag(:word_id, wform.id) %>
-
-                <%= submit_tag("Add") %>
-
-                <% end %>
-            </div>
-        </td>
-    </tr>
-
-    <tr>
-        <td colspan="5" align="left">
-            <% form_tag(:controller => :sentences, :action => :delete_word, :id => wform.sentence_id) do -%>
-
-                <%=  hidden_field_tag(:word_id, wform.id) %>
-
-                <%=  submit_tag("Delete word", :confirm => "Are you sure?") %>
-
-            <% end %>
-        </td>
-    </tr>
-</table>
+    <% end %>
+</div>
