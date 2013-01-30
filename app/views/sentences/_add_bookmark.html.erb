@@ -1,3 +1,8 @@
-<span id='bookmark-span'
-			<%= link_to_remote "Bookmark", :url => { :action => "add_bookmark"}, :with => "'sentence_id='+#{@sentence.id}" %>
+<span id='bookmark-span'>
+    <% if @sentence.is_bookmarked? %>
+        Bookmarked
+    <% else %>
+        <%= link_to_remote "Bookmark", :url => { :action => "add_bookmark"},
+                           :with => "'sentence_id='+#{@sentence.id}" %>
+    <% end %>
 </span>

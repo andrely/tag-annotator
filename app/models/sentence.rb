@@ -120,4 +120,13 @@ class Sentence < ActiveRecord::Base
 
     return self
   end
+
+  ##
+  # Returns true if there exists a bookmark for the sentence
+  # in the database, false otherwise.
+  #
+  def is_bookmarked?
+    return Bookmark.exists?(:tagged_text_id => self.tagged_text_id,
+                            :sentence_id => self.id)
+  end
 end
