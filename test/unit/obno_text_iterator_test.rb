@@ -43,4 +43,32 @@ class OBNOTextIteratorTest < Test::Unit::TestCase
 
     assert_equal(out_file, out)
   end
+
+  def test_sentence_boundary_static
+    fn = File.join(TEST_DATA_PATH, "obno_sent_boundary_2.cor")
+
+    iterator = OBNOTextIterator.new(File.open(fn))
+    text = TaggedText.new
+    iterator.each_sentence { |s| text.sentences << s}
+
+    text.save
+
+    assert_equal(4, text.sentences.count)
+    assert_equal(4, text.sentences[0].length)
+    assert_equal(4, text.sentences[1].length)
+    assert_equal(1, text.sentences[2].length)
+    assert_equal(4, text.sentences[3].length)
+
+    iterator = OBNOTextIterator.new(File.open(fn), true)
+    text = TaggedText.new
+    iterator.each_sentence { |s| text.sentences << s}
+
+    text.save
+
+    assert_equal(3, text.sentences.count)
+    assert_equal(4, text.sentences[0].length)
+    assert_equal(4, text.sentences[1].length)
+    assert_equal(5, text.sentences[2].length)
+
+  end
 end

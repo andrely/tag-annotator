@@ -1,0 +1,41 @@
+<word>«</word>
+"<«>"
+	"$"" <anf>
+<word>En</word>
+"<en>"
+	"en" det mask ent kvant
+<word>setning</word>
+"<setning>"
+	"setning" subst appell mask ub ent
+<word>.</word>
+"<.>"
+	"$." clb <<< <punkt>
+<word>En</word>
+
+"<en>"
+	"en" det mask ent kvant
+<word>setning</word>
+"<setning>"
+	"setning" subst appell mask ub ent
+<word>til</word>
+"<til>"
+	"til" prep
+<word>.</word>
+"<.>"
+	"$." clb <punkt> <<<
+<word>"</word>
+
+"<">"
+	"$"" <anf> <<<
+<word>Enda</word>
+"<enda>"
+	"enda" adv
+<word>en</word>
+"<en>"
+	"en" det mask ent kvant
+<word>setning</word>
+"<setning>"
+	"setning" subst appell mask ub ent
+<word>.</word>
+"<.>"
+	"$." clb <<< <punkt>

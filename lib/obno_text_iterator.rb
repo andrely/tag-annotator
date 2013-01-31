@@ -85,7 +85,7 @@ class OBNOTextIterator
 
     while TRUE
       begin
-        line = f.readline
+        line = next_nonempty_line(f)
       rescue EOFError
         break
       end
@@ -116,10 +116,10 @@ class OBNOTextIterator
     if @peeked_word_record
       header = [@peeked_word_record, @peeked_orig_word_record, @peeled_preamble]
     elsif @peeked_orig_word_record
-      @peeked_word_record = get_word(f.readline)
+      @peeked_word_record = get_word(next_nonempty_line(f))
       header = [@peeked_word_record, @peeked_orig_word_record, @peeked_preamble]
     else
-      while line = f.readline
+      while line = next_nonempty_line(f)
         peek line
 
         break if @peeked_word_record
@@ -131,6 +131,16 @@ class OBNOTextIterator
     unpeek
 
     return header
+  end
+
+  def next_nonempty_line(f)
+    line = f.readline
+
+    if line.strip.empty?
+      return next_nonempty_line(f)
+    end
+
+    return line
   end
 
   def peek(line)
