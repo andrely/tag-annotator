@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121204122516) do
+ActiveRecord::Schema.define(:version => 20130201151448) do
 
   create_table "bookmarks", :force => true do |t|
     t.integer  "sentence_id"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20121204122516) do
   create_table "tagged_texts", :force => true do |t|
     t.string   "filename"
     t.string   "content_type"
-    t.binary   "filedata",       :limit => 20971520
+    t.binary   "filedata",           :limit => 20971520
     t.integer  "sentence_count"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20121204122516) do
     t.text     "comment"
     t.string   "encoding"
     t.string   "format"
+    t.string   "sentence_delimiter"
   end
 
   create_table "tags", :force => true do |t|

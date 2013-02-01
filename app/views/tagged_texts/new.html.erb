@@ -18,10 +18,18 @@
     <%= f.select(:encoding, TaggedText.encodings) %>
   </p>
 
-  <p>
-    <%= f.label :format %>
-    <%= f.select(:format, TaggedText.formats) %>
-  </p>
+    <p>
+        <!-- Dynamically update the options form for the selected format -->
+        <%= f.label :format %>
+        <%= f.select(:format, TaggedText.formats, {},
+                     :onchange => remote_function(:url => {:action => :format_options},
+                                                  :with => "'file_format='+this.value",
+                                                  :update => 'div-text-format-options')) %>
+    </p>
+
+    <!-- File format options form -->
+    <%=  render :partial => 'text_format_options', :locals => { :file_format => :obt } %>
+
   <p>
     <%= f.label :file %><br />
     <%= f.file_field :uploaded_file %>

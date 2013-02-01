@@ -21,7 +21,7 @@ class TaggedText < ActiveRecord::Base
       raise RuntimeError
     end
 
-    obit = OBNOTextIterator.new(f)
+    obit = OBNOTextIterator.new(f, self.sentence_delimiter == 'delimiter')
     obit.each_sentence {|s| sentences << s}
     f.close()
   end

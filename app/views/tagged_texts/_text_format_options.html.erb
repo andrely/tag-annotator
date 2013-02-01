@@ -1,0 +1,19 @@
+<!-- Generates the file format options form in the new tagged text view.
+
+     Local variables:
+     - file_format: The file format as a symbol (VRT or OBT). -->
+
+<div id='div-text-format-options'>
+    <% if file_format == :obt %>
+        <h3>OBT file format options</h3>
+        Sentence boundary markers:
+        <%= select_tag('obt_sentence_boundary_select',
+            options_for_select([["OBT delimiter", "delimiter"],
+                                ["Multitagger", "multitag"]],
+                               "delimiter")) %>
+    <% end %>
+
+    <% if file_format == :vrt %>
+        <!-- No options yet -->
+    <% end %>
+</div>

@@ -45,6 +45,7 @@ class TaggedTextsController < ApplicationController
     @tagged_text = TaggedText.new()
     @tagged_text.encoding = params[:tagged_text][:encoding]
     @tagged_text.format = params[:tagged_text][:format]
+    @tagged_text.sentence_delimiter = params[:obt_sentence_boundary_select] || nil
     @tagged_text.uploaded_file = params[:tagged_text][:uploaded_file]
     @tagged_text.title = params[:tagged_text][:title]
     @tagged_text.comment = params[:tagged_text][:comment]
@@ -104,5 +105,14 @@ class TaggedTextsController < ApplicationController
 
   def list
     @sentences = Sentence.find_all_by_tagged_text_id(params[:id])
+  end
+
+  ##
+  # Responds with the options partial for the file format sent as parameter.
+  # Current formats: OBT, VRT.
+  def format_options
+    @file_format = params[:file_format].downcase.to_sym
+
+    render(:partial => 'text_format_options', :locals => {:file_format => @file_format})
   end
 end
