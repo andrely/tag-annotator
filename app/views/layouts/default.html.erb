@@ -5,10 +5,14 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <title><%= controller.controller_name %>: <%= controller.action_name %></title>
-  <%= stylesheet_link_tag 'scaffold' %>
-	<%= javascript_include_tag :defaults %>
-	<%= javascript_include_tag 'shortcut' %>
+    <%= stylesheet_link_tag 'scaffold' %>
+    <%= javascript_include_tag :defaults %>
+    <%= javascript_include_tag 'shortcut' %>
     <%= javascript_include_tag 'jquery.min.js' %>
+
+    <!-- Bootstrap -->
+    <%= stylesheet_link_tag 'bootstrap.min' %>
+    <%= javascript_include_tag 'bootstrap.min' %>
 
     <%= javascript_tag 'var $J = jQuery.noConflict();' %>
 	
