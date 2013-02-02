@@ -1,43 +1,88 @@
-<h1>Listing tagged_texts</h1>
+<div class="container">
+    <h1>Tagged text annotator</h1>
 
-<table>
-  <tr>
-		<th>Title</th>
-		<th>Filename</th>
-		<th>Comment</th>
-  </tr>
+    <p>
+        This is a list of available tagged corpora.
+    <p>
 
-<% for tagged_text in @tagged_texts %>
-<% first_sent = Sentence.scoped_by_tagged_text_id(tagged_text.id).scoped_by_text_index(0).first -%>
-  <tr>
-		<td><%=h tagged_text.title %></td>
-    <td><%=h tagged_text.filename %></td>
-		<td><%=h truncate(tagged_text.comment, 40) %></td>
-		<td><%= link_to 'Bookmarks', :action => tagged_text.id, :id => 'bookmarks' %></td>
-		<td><%= link_to 'Show', tagged_text %></td>
-    <td><%= link_to 'Edit', edit_tagged_text_path(tagged_text) %></td>
-    <td><%= link_to 'Destroy', tagged_text, :confirm => 'Are you sure?', :method => :delete %></td>
-		<td><%= link_to 'Tag', :controller => 'sentences', :action => 'show', :id => first_sent.id if first_sent  %></td>
-		<td><%= link_to 'Download', :action => 'download', :id => tagged_text.id %></td>
-		<td><%= link_to 'List', :action => 'list', :id => tagged_text.id %></td>
-  </tr>
-<% end %>
-</table>
+    <div class="span12">
 
-<br />
+        <table class="table table-hover table-bordered table-condensed">
+            <tr>
+                <th>Title</th>
+                <th>Filename</th>
+                <th>Comment</th>
+                <th></th>
+            </tr>
 
-<%= link_to 'New tagged_text', new_tagged_text_path %>
+            <% for tagged_text in @tagged_texts %>
+                <% first_sent = Sentence.scoped_by_tagged_text_id(tagged_text.id).scoped_by_text_index(0).first -%>
+                <tr>
+                    <td><%=h tagged_text.title %></td>
+                    <td><%=h tagged_text.filename %></td>
+                    <td><%=h truncate(tagged_text.comment, 40) %></td>
 
-<p>
-	This is a list of availabler tagged corpora.
-<p>
-	<ul>
-		<li><b>Bookmarks:</b> List of bookmarks for this corpus.</li>
-		<li><b>Show:</b> Display meta-information for this corpus.</li>
-		<li><b>Edit:</b> Edit meta-information for this corpus.</li>
-		<li><b>Destroy:</b> Delete corpus from database.</li>
-		<li><b>Tag:</b> Go to first sentence of the corpus.</li>
-		<li><b>Download:</b> Download the corpus text file.</li>
-		<li><b>List:</b> Show a list of all the sentences in the corpus.</li>
-		<li><b>Download:</b> Download the corpus text file.</li>
-	</ul>
+                    <td>
+                        <%= link_to('<i class="icon-bookmark"></i> Bookmarks', {:action => tagged_text.id, :id => 'bookmarks'},
+                                    { :class => 'btn btn-mini' }) %>
+
+                        <%= link_to('<i class="icon-file"></i> Show', tagged_text, { :class => 'btn btn-mini' }) %>
+
+                        <%= link_to('<i class="icon-pencil"></i> Edit', edit_tagged_text_path(tagged_text), { :class => 'btn btn-mini' }) %>
+
+                        <%= link_to('<i class="icon-remove"></i> Destroy', tagged_text,
+                                    { :class => 'btn btn-danger btn-mini',
+                                      :confirm => 'Are you sure?', :method => :delete }) %>
+
+                        <%= link_to('<i class="icon-edit"></i> Tag',
+                                    {:controller => 'sentences', :action => 'show',
+                                     :id => (first_sent.id if first_sent)},
+                                    { :class => 'btn btn-mini btn-primary' }) %>
+
+                        <%= link_to('<i class="icon-download"></i> Download', {:action => 'download', :id => tagged_text.id},
+                                    { :class => 'btn btn-mini' }) %>
+
+                        <%= link_to('<i class="icon-list"></i> List', {:action => 'list', :id => tagged_text.id},
+                                    { :class => 'btn btn-mini' }) %>
+                    </td>
+                </tr>
+            <% end %>
+        </table>
+
+    </div>
+
+    <br />
+
+    <%= link_to('New tagged_text', new_tagged_text_path,
+                { :class => :btn }) %>
+
+    <div class="row">
+        <div class="span6">
+            <dl>
+                <dt>Bookmarks:</dt>
+                <dd>List of bookmarks for this corpus.</dd>
+                <dt>Show:</dt>
+                <dd>Display meta-information for this corpus.</dd>
+                <dt>Edit:</dt>
+                <dd>Edit meta-information for this corpus.</dd>
+                <dt>Destroy:</dt>
+                <dd>Delete corpus from database.</dd>
+            </dl>
+        </div>
+
+        <div class="span6">
+            <dl>
+                <dt>Tag:</dt>
+                <dd>Go to first sentence of the corpus.</dd>
+                <dt>Download:</dt>
+                <dd>Download the corpus text file.</dd>
+                <dt>List:</dt>
+                <dd>Show a list of all the sentences in the corpus.</dd>
+                <dt>Download:</dt>
+                <dd>Download the corpus text file.</dd>
+            </dl>
+        </div>
+    </div>
+
+
+</div>
