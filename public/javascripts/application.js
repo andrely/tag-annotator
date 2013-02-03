@@ -36,12 +36,13 @@ function toggleEltFromButton(elt_id, button_id) {
     $(elt_id).toggle();
 
     var button = $(button_id);
+    var icon = $$('#' + button_id + ' i')[0];
 
-    if (button.text == '+') {
-        $(button_id).update('-');
+    if (icon.hasClassName('icon-plus-sign')) {
+        $(button_id).update("<i class='icon-minus-sign'></i>");
     }
     else {
-        $(button_id).update('+');
+        $(button_id).update("<i class='icon-plus-sign'></i>");
     }
 }
 

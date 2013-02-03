@@ -3,13 +3,14 @@
 
      Local variables:
      - Words to display: words -->
-<p>
+<div class="well">
     <% words.each do |w| -%>
         <% idx = w.sentence_index -%>
 
-        <span id='word-<%= idx %>' class='word' onclick='updateTag(<%= idx %>)'>
+        <span id='word-<%= idx %>' class='word' onclick='updateTag(<%= idx %>)'
+              style='padding-top:2px;padding-bottom:2px;padding-right:4px;padding-left:4px;'>
         <%= w.printable_string %>
       </span>
 
     <% end -%>
-</p>
+</div>

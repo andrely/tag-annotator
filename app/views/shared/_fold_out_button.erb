@@ -17,9 +17,9 @@
    initial_state = TRUE if local_assigns[:initial_state].nil?
 %>
 
-<%= link_to(initial_state ? "+" : "-", "#",
+<%= link_to(initial_state ? "<i class='icon-plus-sign'></i>" : "<i class='icon-minus-sign'></i>", "#",
             :id => button_id,
-            :onclick => "toggleEltFromButton(#{fold_out_elt_id}, #{button_id});",
+            :onclick => "toggleEltFromButton('#{fold_out_elt_id}', '#{button_id}');",
             :style => "text-decoration:none") %>
 
 <%= button_text %>
