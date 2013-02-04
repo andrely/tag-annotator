@@ -17,12 +17,15 @@ class TaggedText < ActiveRecord::Base
 
     f = StringIO.new(f_str)
 
-    if self.format != "OBT":
+    if self.format == 'OBT'
+      it = OBNOTextIterator.new(f, self.sentence_delimiter == 'delimiter')
+    elsif self.format == 'VRT'
+      it = VRTReader.new(f)
+    else
       raise RuntimeError
     end
 
-    obit = OBNOTextIterator.new(f, self.sentence_delimiter == 'delimiter')
-    obit.each_sentence {|s| sentences << s}
+    it.each_sentence {|s| sentences << s}
     f.close()
   end
 
