@@ -130,7 +130,8 @@
     <!-- Renders the word browser -->
     <div id='word_browser'>
         <%= render(:partial => 'word_browser',
-                   :locals => {:words => @words}) %>
+                   :locals => {:words => @words,
+                               :format => @format}) %>
     </div>
 
     <p>

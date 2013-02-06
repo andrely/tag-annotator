@@ -2,15 +2,27 @@
      to set initial status.
 
      Local variables:
-     - Words to display: words -->
+     - Words to display: words
+     - Format of tagged text file: format -->
 <div class="well">
+    <% if format == 'VRT' %>
+        <span class="invisible-label">
+            Word <br> Tag <br> Lemma
+        </span>
+    <% end %>
+
     <% words.each do |w| -%>
         <% idx = w.sentence_index -%>
 
         <span id='word-<%= idx %>' class='word' onclick='updateTag(<%= idx %>)'
               style='padding-top:2px;padding-bottom:2px;padding-right:4px;padding-left:4px;'>
-        <%= w.printable_string %>
-      </span>
+            <%= w.printable_string %>
+
+            <% if format == 'VRT' %>
+                <br> <%= w.tags[0].string %>
+                <br> <%= w.tags[0].lemma %>
+            <% end %>
+        </span>
 
     <% end -%>
 </div>

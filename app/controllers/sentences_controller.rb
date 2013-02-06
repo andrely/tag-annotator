@@ -18,7 +18,10 @@ class SentencesController < ApplicationController
       Sentence.find(:all, :conditions => ["text_index  = ? and tagged_text_id = ?", @sentence.text_index+1, @sentence.tagged_text_id])[0]
     @prev_sent =
       Sentence.find(:all, :conditions => ["text_index  = ? and tagged_text_id = ?", @sentence.text_index-1, @sentence.tagged_text_id])[0]
-    
+
+    # format is a reserved word, workaround to access field
+    @format = TaggedText.find(@sentence.tagged_text_id)[:format]
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @sentence }
