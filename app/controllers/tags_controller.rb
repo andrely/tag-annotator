@@ -1,4 +1,6 @@
 class TagsController < ApplicationController
+  include ApplicationHelper
+
   auto_complete_for :tag, :string
   auto_complete_for :tag, :lemma
 
@@ -32,5 +34,24 @@ class TagsController < ApplicationController
     @sentence = Sentence.find(@word.sentence_id)
     
     render(:partial => 'sentences/word_details', :locals => {:wform => @word, :sent => @sentence})
+  end
+
+  # updates the tag with sent tag (ie. tag_string) and/or lemma parameters
+  def update
+    @tag = Tag.find(params[:id])
+
+    # strip quotes added by javascript encodeURIComponent
+    tag_string = strip_quotes(params[:tag] || "").strip
+    lemma_string = strip_quotes(params[:lemma] || "").strip
+
+    if not tag_string.empty?
+      @tag.string = tag_string
+    end
+
+    if not lemma_string.empty?
+      @tag.lemma = lemma_string
+    end
+
+    @tag.save
   end
 end

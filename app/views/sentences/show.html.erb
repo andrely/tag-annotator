@@ -140,7 +140,12 @@
     <% @words.each do |wform| -%>
         <% w_idx = wform.sentence_index -%>
         <div id='tag-<%= w_idx %>' class='tag' style='display:none'>
-            <%= render(:partial => "word_details", :locals => { :wform => wform, :sent => @sentence }) %>
+            <% if @format == 'VRT' %>
+                <%= render(:partial => 'word_details_vrt',
+                           :locals => { :wform => wform, :sent => @sentence }) %>
+            <% else %>
+                <%= render(:partial => "word_details", :locals => { :wform => wform, :sent => @sentence }) %>
+            <% end %>
         </div>
     <% end -%>
 

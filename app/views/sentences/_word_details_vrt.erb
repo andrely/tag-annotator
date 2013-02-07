@@ -1,0 +1,75 @@
+<!-- Partial generating the html form for changing word/tag details in a VRT tagged text.
+
+     Local variables:
+     The word instance: wform
+     The sentence instance: sentence -->
+
+<!-- TODO update shortcuts -->
+
+<% w_idx = wform.sentence_index -%>
+
+<!-- Fold out form for changing the word form -->
+<div class="span6">
+    <%= render(:partial => 'shared/fold_out_button',
+               :locals => {:fold_out_elt_id => "change_word_form_#{wform.id}",
+                           :button_id => "change_word_button_#{wform.sentence_index}",
+                           :button_text => "Change word"}) %>
+
+    <div style='display:none' id=<%= "change_word_form_#{wform.id}" -%>>
+        Word:
+        <%= text_field_tag("change_word_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                           :onblur => "addShortcuts();") %>
+        <%= submit_tag('Change', :onclick => remote_function(:url => {:controller => :words,
+                                                                   :action => :change_form,
+                                                                   :id => wform.id},
+                                                          :with => "'word_form='+'\"'+encodeURIComponent($('change_word_#{wform.id}').value)+'\"'",
+                                                          :update => "tag-#{w_idx}",
+                                                          :success => "updateTag(#{w_idx});",
+                                                          :failure => "showError('Change word failed!');")) %>
+    </div>
+</div>
+
+<!-- Fold out form fort changing the lemma -->
+<div class="span6">
+    <%= render(:partial => 'shared/fold_out_button',
+               :locals => {:fold_out_elt_id => "change_lemma_form_#{wform.id}",
+                           :button_id => "change_lemma_button_#{wform.sentence_index}",
+                           :button_text => "Change lemma"}) %>
+
+    <div style='display:none' id=<%= "change_lemma_form_#{wform.id}" -%>>
+        Lemma:
+        <%= text_field_tag("change_lemma_#{wform.id}", "", :onfocus => "removeShortcuts();",
+                           :onblur => "addShortcuts();") %>
+        <%= submit_tag('Change', :onclick => remote_function(:url => {:controller => :tags,
+                                                                   :action => :update,
+                                                                   :id => wform.tags[0].id},
+                                                          :with => "'lemma='+'\"'+encodeURIComponent($('change_lemma_#{wform.id}').value)+'\"'",
+                                                          :update => "tag-#{w_idx}",
+                                                          :success => "updateTag(#{w_idx});",
+                                                          :failure => "showError('Change lemma failed!');")) %>
+    </div>
+</div>
+
+<!-- Fold out form for changing the tag string -->
+<div class="span6">
+    <%= render(:partial => 'shared/fold_out_button',
+               :locals => {:fold_out_elt_id => "change_tag_form_#{wform.id}",
+                           :button_id => "change_tag_button_#{wform.sentence_index}",
+                           :button_text => "Change tag"}) %>
+
+    <div style='display:none' id=<%= "change_tag_form_#{wform.id}" -%>>
+        Tag:
+        <%= text_field_with_auto_complete_with_id_checking(
+                    :tag, :string, {:id => "change_tag_#{wform.id}", :onfocus => "removeShortcuts();",
+                                    :onblur => "addShortcuts();"},
+                    {:url => {:controller => :tags, :action => "auto_complete_for_tag_string"},
+                     :method => :get}) %>
+        <%= submit_tag('Change', :onclick => remote_function(:url => {:controller => :tags,
+                                                                      :action => :update,
+                                                                      :id => wform.tags[0].id},
+                                                             :with => "'tag='+'\"'+encodeURIComponent($('change_tag_#{wform.id}').value)+'\"'",
+                                                             :update => "tag-#{w_idx}",
+                                                             :success => "updateTag(#{w_idx});",
+                                                             :failure => "showError('Change tag failed!');")) %>
+    </div>
+</div>
