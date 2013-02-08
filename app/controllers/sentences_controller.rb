@@ -19,6 +19,8 @@ class SentencesController < ApplicationController
     @prev_sent =
       Sentence.find(:all, :conditions => ["text_index  = ? and tagged_text_id = ?", @sentence.text_index-1, @sentence.tagged_text_id])[0]
 
+    @focus = params[:focus] || 0
+
     # format is a reserved word, workaround to access field
     @format = TaggedText.find(@sentence.tagged_text_id)[:format]
 
