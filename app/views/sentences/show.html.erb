@@ -26,6 +26,8 @@
             $('word-' + index).addClassName('label');
             $('tag-' + index).style.display = 'block';
             focus = index;
+
+            $$('.focus_value').each(function (e) {e.value = focus;});
         }
 
         function toggleTag(index) {

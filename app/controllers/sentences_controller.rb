@@ -84,6 +84,8 @@ class SentencesController < ApplicationController
     @word_string = (params[:word_string] || "").strip
     @obt_word_string = (params[:obt_word_string] || "").strip
 
+    @focus = params[:focus] || 0
+
     # redirect with error if the passed word string is empty
     if @word_string.empty?
       flash[:error] = "Couldn't add empty word"
@@ -99,7 +101,7 @@ class SentencesController < ApplicationController
 
     @sentence.save
 
-    redirect_to :controller =>  :sentences, :action => :show, :id => @sentence.id
+    redirect_to :controller => :sentences, :action => :show, :id => @sentence.id, :focus => @focus
   end
 
   ##

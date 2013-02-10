@@ -16,16 +16,13 @@
                            :button_text => "Change word"}) %>
 
     <div style='display:none' id=<%= "change_word_form_#{wform.id}" -%>>
-        Word:
-        <%= text_field_tag("change_word_#{wform.id}", "", :onfocus => "removeShortcuts();",
-                           :onblur => "addShortcuts();") %>
-        <%= submit_tag('Change', :onclick => remote_function(:url => {:controller => :words,
-                                                                   :action => :change_form,
-                                                                   :id => wform.id},
-                                                          :with => "'word_form='+'\"'+encodeURIComponent($('change_word_#{wform.id}').value)+'\"'",
-                                                          :update => "tag-#{w_idx}",
-                                                          :success => "updateTag(#{w_idx});",
-                                                          :failure => "showError('Change word failed!');")) %>
+        <% form_tag(:controller => :words, :action => :change_form, :id => wform.id) do -%>
+            Word:
+            <%= text_field_tag(:word_form, "", :onfocus => "removeShortcuts();",
+                               :onblur => "addShortcuts();") %>
+            <%= hidden_field_tag(:focus, 0, :id => :focus_value, :class => :focus_value) %>
+            <%= submit_tag('Change') %>
+        <% end -%>
     </div>
 </div>
 
@@ -37,16 +34,13 @@
                            :button_text => "Change lemma"}) %>
 
     <div style='display:none' id=<%= "change_lemma_form_#{wform.id}" -%>>
-        Lemma:
-        <%= text_field_tag("change_lemma_#{wform.id}", "", :onfocus => "removeShortcuts();",
-                           :onblur => "addShortcuts();") %>
-        <%= submit_tag('Change', :onclick => remote_function(:url => {:controller => :tags,
-                                                                   :action => :update,
-                                                                   :id => wform.tags[0].id},
-                                                          :with => "'lemma='+'\"'+encodeURIComponent($('change_lemma_#{wform.id}').value)+'\"'",
-                                                          :update => "tag-#{w_idx}",
-                                                          :success => "updateTag(#{w_idx});",
-                                                          :failure => "showError('Change lemma failed!');")) %>
+        <% form_tag(:controller => :tags, :action => :update, :id => wform.tags[0].id) do -%>
+            Lemma:
+            <%= text_field_tag(:lemma, "", :onfocus => "removeShortcuts();",
+                               :onblur => "addShortcuts();") %>
+            <%= hidden_field_tag(:focus, 0, :id => :focus_value, :class => :focus_value) %>
+            <%= submit_tag('Change') %>
+        <% end -%>
     </div>
 </div>
 
@@ -58,18 +52,16 @@
                            :button_text => "Change tag"}) %>
 
     <div style='display:none' id=<%= "change_tag_form_#{wform.id}" -%>>
-        Tag:
-        <%= text_field_with_auto_complete_with_id_checking(
-                    :tag, :string, {:id => "change_tag_#{wform.id}", :onfocus => "removeShortcuts();",
-                                    :onblur => "addShortcuts();"},
-                    {:url => {:controller => :tags, :action => "auto_complete_for_tag_string"},
-                     :method => :get}) %>
-        <%= submit_tag('Change', :onclick => remote_function(:url => {:controller => :tags,
-                                                                      :action => :update,
-                                                                      :id => wform.tags[0].id},
-                                                             :with => "'tag='+'\"'+encodeURIComponent($('change_tag_#{wform.id}').value)+'\"'",
-                                                             :update => "tag-#{w_idx}",
-                                                             :success => "updateTag(#{w_idx});",
-                                                             :failure => "showError('Change tag failed!');")) %>
+        <% form_tag(:controller => :tags, :action => :update, :id => wform.tags[0].id) do -%>
+            Tag:
+            <%= text_field_with_auto_complete_with_id_checking(
+                        :tag, :string, {:id => "change_tag_#{wform.id}", :onfocus => "removeShortcuts();",
+                                        :onblur => "addShortcuts();"},
+                        {:url => {:controller => :tags, :action => "auto_complete_for_tag_string"},
+                         :method => :get}) %>
+
+            <%= hidden_field_tag(:focus, 0, :id => :focus_value, :class => :focus_value) %>
+            <%= submit_tag('Change') %>
+        <% end -%>
     </div>
 </div>

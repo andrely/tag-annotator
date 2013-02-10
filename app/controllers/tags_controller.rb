@@ -40,8 +40,17 @@ class TagsController < ApplicationController
   def update
     @tag = Tag.find(params[:id])
 
+    @focus = params[:focus] || 0
+    @word = Word.find(@tag.word_id)
+    @sentence = Sentence.find(@word.sentence_id)
+
     # strip quotes added by javascript encodeURIComponent
-    tag_string = strip_quotes(params[:tag] || "").strip
+    if params[:tag]
+      tag_string = strip_quotes(params[:tag][:string] || "").strip if params[:tag]
+    else
+      tag_string = ""
+    end
+    
     lemma_string = strip_quotes(params[:lemma] || "").strip
 
     if not tag_string.empty?
@@ -53,5 +62,7 @@ class TagsController < ApplicationController
     end
 
     @tag.save
+
+    redirect_to :controller => :sentences, :action => :show, :id => @sentence.id, :focus => @focus
   end
 end

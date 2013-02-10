@@ -43,6 +43,8 @@ class WordsController < ApplicationController
   def change_form
     @word = Word.find(params[:id])
 
+    @focus = params[:focus] || 0
+
     # parameters are quoted to ensure proper encoding with javascript encodeURIComponent
     new_form = strip_quotes((params[:word_form] || "")).strip
     new_obt_form = strip_quotes((params[:obt_word_form] || "")).strip
@@ -71,6 +73,6 @@ class WordsController < ApplicationController
 
     @sentence = Sentence.find(@word.sentence_id)
 
-    render(:partial => "sentences/word_details", :locals => {:wform => @word, :sent => @sentence})
+    redirect_to :controller => :sentences, :action => :show, :id => @sentence.id, :focus => @focus
   end
 end

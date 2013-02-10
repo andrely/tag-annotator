@@ -155,6 +155,7 @@
         <% end %>
 
         <%= hidden_field_tag(:word_id, wform.id) %>
+        <%= hidden_field_tag(:focus, 0, :id => :focus_value, :class => :focus_value) %>
 
         <%= submit_tag("Add") %>
 
