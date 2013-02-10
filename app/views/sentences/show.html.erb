@@ -5,6 +5,7 @@
         var focus = <%= @focus -%>;
         <%= "var AUTH_TOKEN = '#{form_authenticity_token}';" if protect_against_forgery? %>
         var length = <%= @sentence.length -%>;
+        var format = '<%= @format -%>';
 
         /* guard variable in order to aviod adding/removiung shortcuts
          * multiple times in Chrome on Windows.*/
@@ -75,9 +76,30 @@
             shortcut.add("9", function() { toggleTag(8); }, {'disable_in_input': true });
             shortcut.add("0", function() { toggleTag(9); }, {'disable_in_input': true });
 
-            shortcut.add("F1", function() { $('add_tag_button_' + focus).click();}, {'disable_in_input': true});
-            shortcut.add("F2", function() { $('change_word_button_' + focus).click();}, {'disable_in_input': true});
-            shortcut.add("F3", function() { $('insert_word_button_' + focus).click();}, {'disable_in_input': true});
+            shortcut.add("F1", function() {
+                if (format == 'VRT') {
+                    $('change_word_button_vrt_' + focus).click();
+                }
+                else {
+                    $('add_tag_button_' + focus).click();
+                }
+            }, {'disable_in_input': true});
+            shortcut.add("F2", function() {
+                if (format == 'VRT') {
+                    $('change_lemma_button_vrt_' + focus).click();
+                }
+                else {
+                    $('change_word_button_' + focus).click();
+                }
+            }, {'disable_in_input': true});
+            shortcut.add("F3", function() {
+                if (format == 'VRT') {
+                    $('change_tag_button_vrt_' + focus).click();
+                }
+                else {
+                    $('insert_word_button_' + focus).click();
+                }
+            }, {'disable_in_input': true});
 
             shortcutsEnabled = true;
         }

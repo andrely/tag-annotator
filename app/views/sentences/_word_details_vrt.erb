@@ -12,7 +12,7 @@
 <div class="span6">
     <%= render(:partial => 'shared/fold_out_button',
                :locals => {:fold_out_elt_id => "change_word_form_#{wform.id}",
-                           :button_id => "change_word_button_#{wform.sentence_index}",
+                           :button_id => "change_word_button_vrt_#{wform.sentence_index}",
                            :button_text => "Change word"}) %>
 
     <div style='display:none' id=<%= "change_word_form_#{wform.id}" -%>>
@@ -30,7 +30,7 @@
 <div class="span6">
     <%= render(:partial => 'shared/fold_out_button',
                :locals => {:fold_out_elt_id => "change_lemma_form_#{wform.id}",
-                           :button_id => "change_lemma_button_#{wform.sentence_index}",
+                           :button_id => "change_lemma_button_vrt_#{wform.sentence_index}",
                            :button_text => "Change lemma"}) %>
 
     <div style='display:none' id=<%= "change_lemma_form_#{wform.id}" -%>>
@@ -48,7 +48,7 @@
 <div class="span6">
     <%= render(:partial => 'shared/fold_out_button',
                :locals => {:fold_out_elt_id => "change_tag_form_#{wform.id}",
-                           :button_id => "change_tag_button_#{wform.sentence_index}",
+                           :button_id => "change_tag_button_vrt_#{wform.sentence_index}",
                            :button_text => "Change tag"}) %>
 
     <div style='display:none' id=<%= "change_tag_form_#{wform.id}" -%>>
