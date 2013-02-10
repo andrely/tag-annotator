@@ -89,32 +89,29 @@
                            :button_text => "Change word"}) %>
 </div>
 <div style='display:none;' id=<%= "change_word_form_form_#{wform.id}" -%>>
-    New word:
-    <%= text_field_tag("change_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
-                       :onblur => "addShortcuts();") %>
+    <% form_tag(:controller => :words, :action => :change_form, :id => wform.id) do -%>
+        New word:
+        <%= text_field_tag("word_form", "", :onfocus => "removeShortcuts();",
+                           :onblur => "addShortcuts();") %>
 
-    <!-- If there are separate OBT word form create foldout form for changing it. -->
-    <% if wform.orig_string %>
-        <%= render(:partial => 'shared/fold_out_button',
-                   :locals => {:fold_out_elt_id => "change_obt_word_form_span_#{wform.id}",
-                               :button_id => "change_obt_word_button_#{wform.id}"}) %>
+        <!-- If there are separate OBT word form create foldout form for changing it. -->
+        <% if wform.orig_string %>
+            <%= render(:partial => 'shared/fold_out_button',
+                       :locals => {:fold_out_elt_id => "change_obt_word_form_span_#{wform.id}",
+                                   :button_id => "change_obt_word_button_#{wform.id}"}) %>
 
-        <span style='display:none;' id=<%= "change_obt_word_form_span_#{wform.id}" -%>>
+            <span style='display:none;' id=<%= "change_obt_word_form_span_#{wform.id}" -%>>
                 New OBT word:
-            <%= text_field_tag("change_obt_word_form_#{wform.id}", "", :onfocus => "removeShortcuts();",
-                               :onblur => "addShortcuts();") %>
+                <%= text_field_tag("obt_word_form", "", :onfocus => "removeShortcuts();",
+                                   :onblur => "addShortcuts();") %>
 
-                </span>
-    <% end %>
+            </span>
+        <% end %>
 
-    <%= submit_tag("Change",
-                   :onclick => (remote_function :url => {:controller => :words,
-                                                         :action => :change_form,
-                                                         :id => wform.id},
-                                                :with => "'word_form='+'\"'+encodeURIComponent($('change_word_form_#{wform.id}').value)+'\"'+'&obt_word_form='+'\"'+encodeURIComponent($('change_obt_word_form_#{wform.id}').value)+'\"'",
-                                                :update => "tag-#{w_idx}",
-                                                :complete => "updateWordBrowser(#{wform.sentence_id}, #{w_idx})",
-                                                :failure => "showError('Change word failed!');")) %>
+        <%= hidden_field_tag(:focus, 0, :id => :focus_value, :class => :focus_value) %>
+
+        <%= submit_tag("Change") %>
+    <% end -%>
 </div>
 
 <!-- Fold out form for inserting a word -->
@@ -165,6 +162,7 @@
     <% form_tag(:controller => :sentences, :action => :delete_word, :id => wform.sentence_id) do -%>
 
         <%= hidden_field_tag(:word_id, wform.id) %>
+        <%= hidden_field_tag(:focus, 0, :id => :focus_value, :class => :focus_value) %>
 
         <%= submit_tag("Delete word", :confirm => "Are you sure?") %>
 

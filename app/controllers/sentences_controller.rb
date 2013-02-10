@@ -111,10 +111,12 @@ class SentencesController < ApplicationController
     @sentence = Sentence.find(params[:id])
     @word_id = params[:word_id]
 
+    @focus = params[:focus] || 0
+
     @sentence.delete_word(@word_id)
 
     @sentence.save
 
-    redirect_to :controller =>  :sentences, :action => :show, :id => @sentence.id
+    redirect_to :controller =>  :sentences, :action => :show, :id => @sentence.id, :focus => @focus
   end
 end
