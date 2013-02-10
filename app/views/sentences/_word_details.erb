@@ -108,7 +108,7 @@
             </span>
         <% end %>
 
-        <%= hidden_field_tag(:focus, 0, :id => :focus_value, :class => :focus_value) %>
+        <%= hidden_field_tag(:focus, focus, :id => :focus_value, :class => :focus_value) %>
 
         <%= submit_tag("Change") %>
     <% end -%>
@@ -152,7 +152,7 @@
         <% end %>
 
         <%= hidden_field_tag(:word_id, wform.id) %>
-        <%= hidden_field_tag(:focus, 0, :id => :focus_value, :class => :focus_value) %>
+        <%= hidden_field_tag(:focus, focus, :id => :focus_value, :class => :focus_value) %>
 
         <%= submit_tag("Add") %>
 
@@ -162,7 +162,7 @@
     <% form_tag(:controller => :sentences, :action => :delete_word, :id => wform.sentence_id) do -%>
 
         <%= hidden_field_tag(:word_id, wform.id) %>
-        <%= hidden_field_tag(:focus, 0, :id => :focus_value, :class => :focus_value) %>
+        <%= hidden_field_tag(:focus, focus, :id => :focus_value, :class => :focus_value) %>
 
         <%= submit_tag("Delete word", :confirm => "Are you sure?") %>
 

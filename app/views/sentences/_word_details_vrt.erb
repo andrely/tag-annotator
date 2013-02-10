@@ -20,7 +20,7 @@
             Word:
             <%= text_field_tag(:word_form, "", :onfocus => "removeShortcuts();",
                                :onblur => "addShortcuts();") %>
-            <%= hidden_field_tag(:focus, 0, :id => :focus_value, :class => :focus_value) %>
+            <%= hidden_field_tag(:focus, focus, :id => :focus_value, :class => :focus_value) %>
             <%= submit_tag('Change') %>
         <% end -%>
     </div>
@@ -38,7 +38,7 @@
             Lemma:
             <%= text_field_tag(:lemma, "", :onfocus => "removeShortcuts();",
                                :onblur => "addShortcuts();") %>
-            <%= hidden_field_tag(:focus, 0, :id => :focus_value, :class => :focus_value) %>
+            <%= hidden_field_tag(:focus, focus, :id => :focus_value, :class => :focus_value) %>
             <%= submit_tag('Change') %>
         <% end -%>
     </div>
@@ -60,7 +60,7 @@
                         {:url => {:controller => :tags, :action => "auto_complete_for_tag_string"},
                          :method => :get}) %>
 
-            <%= hidden_field_tag(:focus, 0, :id => :focus_value, :class => :focus_value) %>
+            <%= hidden_field_tag(:focus, focus, :id => :focus_value, :class => :focus_value) %>
             <%= submit_tag('Change') %>
         <% end -%>
     </div>

@@ -164,9 +164,10 @@
         <div id='tag-<%= w_idx %>' class='tag' style='display:none'>
             <% if @format == 'VRT' %>
                 <%= render(:partial => 'word_details_vrt',
-                           :locals => { :wform => wform, :sent => @sentence }) %>
+                           :locals => { :wform => wform, :sent => @sentence, :focus => @focus }) %>
             <% else %>
-                <%= render(:partial => "word_details", :locals => { :wform => wform, :sent => @sentence }) %>
+                <%= render(:partial => "word_details",
+                           :locals => { :wform => wform, :sent => @sentence, :focus => @focus }) %>
             <% end %>
         </div>
     <% end -%>
