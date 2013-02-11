@@ -23,7 +23,7 @@ test:
 
 production:
   adapter: mysql
-  database: tag_annotator_0_8_prod
+  database: tag_annotator_0_9_prod
   username: tag-annotator
   password: secret
   host: localhost
