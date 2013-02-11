@@ -1,0 +1,11 @@
+<tag>
+This	DT	this
+is	VBZ	be
+a	DT	a
+sentence	NN	sentence
+.	SENT	.
+<tag>
+Another	DT	another
+sentence	NN	sentence
+.	SENT	.
+<tag>

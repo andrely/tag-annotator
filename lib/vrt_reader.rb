@@ -4,10 +4,18 @@
 # Currently works with TreeTagger output texts
 #
 class VRTReader
+  # regex recognizing valid VRT line entries
+  @@line_re = Regexp.new("^[^\t]+\t[^\t]+(\t[^\t]+)?")
+
+  # any trailing data after the last valid entry will be stored
+  # in this instance variable, an Array with the actual lines
+  attr_accessor :postamble
+
   ##
   # Initialize with readable tagged text source
   def initialize(readable)
     @file = readable
+    @postamble = nil
   end
 
   ##
@@ -31,6 +39,7 @@ class VRTReader
 
     while true
       word = get_next_word(file)
+
       break if word.nil?
 
       word.sentence_index = sent_index
@@ -49,27 +58,44 @@ class VRTReader
 
   ##
   # Parse the next word line in the readable
-  def get_next_word(file)
+  def get_next_word(file, preamble = [])
     begin
-      line = file.readline
+      line = file.readline.strip
     rescue EOFError
+      # save any trailing data
+      @postamble = preamble if preamble.count > 0
+
       return nil
     end
-    word, tag, lemma = line.split
 
-    w = Word.new
-    w.string = word
+    # process normally if this is a line with a valid entry
+    if @@line_re.match(line)
+      word, tag, lemma = line.split
 
-    t = Tag.new
-    t.string = tag
-    t.lemma = lemma
-    w.tags << t
+      w = Word.new
+      w.string = word
 
-    if tag == 'SENT'
-      w.end_of_sentence_p = true
+      t = Tag.new
+      t.string = tag
+      t.lemma = lemma
+      w.tags << t
+
+      if tag == 'SENT'
+        w.end_of_sentence_p = true
+      end
+
+      if preamble.count > 0
+        w.preamble = preamble.join('\n')
+      end
+
+      return w
+    else
+      # if the line is not valid, keep it as preamble data and parse
+      # parse the next line
+      preamble << [line]
+
+      return get_next_word(file, preamble)
     end
-
-    return w
   end
 
   ##
@@ -79,9 +105,12 @@ class VRTReader
 
     text.sentences.each do |s|
       s.words.each do |w|
+        str += w.preamble + "\n" if w.preamble
         str += "#{w.string}\t#{w.tags[0].string}\t#{w.tags[0].lemma}\n"
       end
     end
+
+    str += text.postamble + "\n" if text.postamble
 
     return str
   end

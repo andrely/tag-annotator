@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130201151448) do
+ActiveRecord::Schema.define(:version => 20130211225512) do
 
   create_table "bookmarks", :force => true do |t|
     t.integer  "sentence_id"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20130201151448) do
     t.string   "encoding"
     t.string   "format"
     t.string   "sentence_delimiter"
+    t.string   "postamble"
   end
 
   create_table "tags", :force => true do |t|

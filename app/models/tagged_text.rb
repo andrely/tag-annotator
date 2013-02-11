@@ -27,6 +27,12 @@ class TaggedText < ActiveRecord::Base
 
     it.each_sentence {|s| sentences << s}
     f.close()
+
+    # add postamble stored in iterator after parsing last sentence
+    # TODO add support for arbitrary data for OBT format
+    if self.format = 'VRT'
+      self.postamble = it.postamble.join('\n')
+    end
   end
 
   def base_part_of(file_name) 
