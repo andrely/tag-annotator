@@ -16,11 +16,11 @@
 
         <span id='word-<%= idx %>' class='word' onclick='updateTag(<%= idx %>)'
               style='padding-top:2px;padding-bottom:2px;padding-right:4px;padding-left:4px;'>
-            <%= w.printable_string %>
+            <%=h w.printable_string %>
 
             <% if format == 'VRT' %>
-                <br> <%= w.tags[0].string %>
-                <br> <%= w.tags[0].lemma %>
+                <br> <%=h w.tags[0].string %>
+                <br> <%=h w.tags[0].lemma %>
             <% end %>
         </span>
 

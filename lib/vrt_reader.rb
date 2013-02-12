@@ -10,6 +10,8 @@ class VRTReader
   # extra sentence breaks for speech transcriptions
   @@end_strings = ['(.)', '(..)']
 
+  @@max_sent_length = 30
+
   # any trailing data after the last valid entry will be stored
   # in this instance variable, an Array with the actual lines
   attr_accessor :postamble
@@ -50,6 +52,10 @@ class VRTReader
       sentence.words << word
 
       sent_index += 1
+
+      if sent_index >= @@max_sent_length
+        word.end_of_sentence_p = true
+      end
 
       break if word.end_of_sentence_p
     end
