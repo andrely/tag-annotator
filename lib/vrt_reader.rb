@@ -6,6 +6,9 @@
 class VRTReader
   # regex recognizing valid VRT line entries
   @@line_re = Regexp.new("^[^\t]+\t[^\t]+(\t[^\t]+)?")
+  @@end_tags = ['SENT', 'FE']
+  # extra sentence breaks for speech transcriptions
+  @@end_strings = ['(.)', '(..)']
 
   # any trailing data after the last valid entry will be stored
   # in this instance variable, an Array with the actual lines
@@ -63,7 +66,7 @@ class VRTReader
       line = file.readline.strip
     rescue EOFError
       # save any trailing data
-      @postamble = preamble if preamble.count > 0
+      @postamble = preamble.join("\n") if preamble.count > 0
 
       return nil
     end
@@ -80,12 +83,13 @@ class VRTReader
       t.lemma = lemma
       w.tags << t
 
-      if tag == 'SENT'
+      if @@end_tags.member?(tag) or
+          @@end_strings.member?(w.string)
         w.end_of_sentence_p = true
       end
 
       if preamble.count > 0
-        w.preamble = preamble.join('\n')
+        w.preamble = preamble.join("\n")
       end
 
       return w
@@ -99,8 +103,39 @@ class VRTReader
   end
 
   ##
+  # Parse VRT format tagged text from the string
+  # TODO handle encoding
+  def self.stringToText(str, encoding = 'utf-8')
+    StringIO.new(str) do |f|
+      return VRTReader.readableToText(f)
+    end
+  end
+
+  ##
+  # Parse VRT format tagged text from the given filename
+  # TODO handle encoding
+  def self.fileToText(file, encoding = 'utf-8')
+    File.open(file, 'r') do |f|
+      return VRTReader.readableToText(f)
+    end
+  end
+
+  def self.readableToText(readable)
+    text = TaggedText.new
+    iterator = VRTReader.new(readable)
+    iterator.each_sentence { |s| text.sentences << s}
+    text.save
+
+    if iterator.postamble
+      text.postamble = iterator.postamble
+    end
+
+    return text
+  end
+
+  ##
   # Generate a VRT text format output string for the given TaggedText instance
-  def self.textString(text)
+  def self.textToString(text)
     str = ''
 
     text.sentences.each do |s|

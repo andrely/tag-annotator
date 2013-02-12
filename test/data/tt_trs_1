@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Trans SYSTEM "trans-14.dtd">
+<Trans scribe="Tove Lindqvist" audio_filename="2005_255_klippt" version="9" version_date="120625">
+<Topics>
+<Topic id="to1" desc="Intervju"/>
+</Topics>
+<Speakers>
+<Speaker id="spk1" name="Intervjuare HK" check="no" dialect="native" accent="" scope="local"/>
+<Speaker id="spk2" name="Informant 2005:255" check="no" dialect="native" accent="" scope="local"/>
+</Speakers>
+<Episode program="" air_date="">
+<Section type="report" startTime="0" endTime="1223.336" topic="to1">
+<Turn startTime="0" endTime="9.158" speaker="spk1">
+<Sync time="0"/>
+kan	VB_PRS_AKT	kunna
+du	PN_UTR_SIN_DEF_SUB	du
+ber�tta	VB_INF_AKT	ber�tta
+lite	AB_POS	lite
+jag	PN_UTR_SIN_DEF_SUB	jag
+vet	VB_PRS_AKT	veta
+att	SN	att
+det-�r	PN_NEU_SIN_DEF_SUB/OBJ	<unknown>
+lite	AB_POS	lite
+speciellt	AB_POS	speciellt
+med	PP	med
+det	PN_NEU_SIN_DEF_SUB/OBJ	det
+h�r	AB	h�r
+Korpocentralen	NN_UTR_SIN_DEF_NOM	<unknown>
+kan	VB_PRS_AKT	kunna
+du	PN_UTR_SIN_DEF_SUB	du
+ber�tta	VB_INF_AKT	ber�tta
+lite	AB_POS	lite
+om	PP	om
+om	SN	om
+dess	PS_UTR/NEU_SIN/PLU_DEF	dess
+verksamhet	NN_UTR_SIN_IND_NOM	verksamhet
+hur	HA	hur
+den	PN_UTR_SIN_DEF_SUB/OBJ	den
+uppstod	VB_PRT_AKT	uppst�
+och	KN	och
+och	KN	och
+och	KN	och
+</Turn>
+<Turn speaker="spk2 spk1" startTime="9.158" endTime="9.838">
+<Sync time="9.158"/>
+<Who nb="1"/>
+<Event desc="skratt" type="noise" extent="instantaneous"/>
+<Comment desc="os�kert"/>
+<Who nb="2"/>
+varf�r	HA	varf�r
+den	PN_UTR_SIN_DEF_SUB/OBJ	den
+�r	VB_PRS_AKT	vara
+</Turn>
+</Section>
+</Episode>
+</Trans>

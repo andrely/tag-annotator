@@ -31,7 +31,7 @@ class TaggedText < ActiveRecord::Base
     # add postamble stored in iterator after parsing last sentence
     # TODO add support for arbitrary data for OBT format
     if self.format = 'VRT'
-      self.postamble = it.postamble.join('\n')
+      self.postamble = it.postamble
     end
   end
 
