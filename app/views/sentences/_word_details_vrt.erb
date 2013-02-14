@@ -26,24 +26,6 @@
     </div>
 </div>
 
-<!-- Fold out form fort changing the lemma -->
-<div class="span6">
-    <%= render(:partial => 'shared/fold_out_button',
-               :locals => {:fold_out_elt_id => "change_lemma_form_#{wform.id}",
-                           :button_id => "change_lemma_button_vrt_#{wform.sentence_index}",
-                           :button_text => "Change lemma"}) %>
-
-    <div style='display:none' id=<%= "change_lemma_form_#{wform.id}" -%>>
-        <% form_tag(:controller => :tags, :action => :update, :id => wform.tags[0].id) do -%>
-            Lemma:
-            <%= text_field_tag(:lemma, "", :onfocus => "removeShortcuts();",
-                               :onblur => "addShortcuts();") %>
-            <%= hidden_field_tag(:focus, focus, :id => :focus_value, :class => :focus_value) %>
-            <%= submit_tag('Change') %>
-        <% end -%>
-    </div>
-</div>
-
 <!-- Fold out form for changing the tag string -->
 <div class="span6">
     <%= render(:partial => 'shared/fold_out_button',
@@ -60,6 +42,24 @@
                         {:url => {:controller => :tags, :action => "auto_complete_for_tag_string"},
                          :method => :get}) %>
 
+            <%= hidden_field_tag(:focus, focus, :id => :focus_value, :class => :focus_value) %>
+            <%= submit_tag('Change') %>
+        <% end -%>
+    </div>
+</div>
+
+<!-- Fold out form fort changing the lemma -->
+<div class="span6">
+    <%= render(:partial => 'shared/fold_out_button',
+               :locals => {:fold_out_elt_id => "change_lemma_form_#{wform.id}",
+                           :button_id => "change_lemma_button_vrt_#{wform.sentence_index}",
+                           :button_text => "Change lemma"}) %>
+
+    <div style='display:none' id=<%= "change_lemma_form_#{wform.id}" -%>>
+        <% form_tag(:controller => :tags, :action => :update, :id => wform.tags[0].id) do -%>
+            Lemma:
+            <%= text_field_tag(:lemma, "", :onfocus => "removeShortcuts();",
+                               :onblur => "addShortcuts();") %>
             <%= hidden_field_tag(:focus, focus, :id => :focus_value, :class => :focus_value) %>
             <%= submit_tag('Change') %>
         <% end -%>
